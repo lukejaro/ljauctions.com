@@ -1,0 +1,48 @@
+---
+import { formatAuctionDate, type Auction } from "../data/site";
+
+interface Props {
+  auctions: Auction[];
+  emptyTitle: string;
+  emptyText: string;
+  headingLevel?: "h2" | "h3";
+  titleLevel?: "h2" | "h3";
+}
+
+const { auctions, emptyTitle, emptyText, headingLevel = "h2", titleLevel = "h2" } = Astro.props;
+const Heading = headingLevel;
+const Title = titleLevel;
+---
+
+{
+  auctions.length === 0 ? (
+    <div class="border border-line bg-paper px-6 py-12 text-center">
+      <Heading class="font-serif text-3xl text-ink">{emptyTitle}</Heading>
+      <p class="mx-auto mt-3 max-w-md text-pretty text-ink-soft">{emptyText}</p>
+      <a
+        href="/contact"
+        class="mt-6 inline-flex min-h-11 items-center justify-center bg-forest px-5 text-sm font-semibold text-cream hover:bg-forest-deep"
+      >
+        Ask about a sale
+      </a>
+    </div>
+  ) : (
+    <ol class="divide-y divide-line border-y border-line">
+      {auctions.map((auction) => (
+        <li>
+          <article class="grid gap-2 py-8 md:grid-cols-[16rem_1fr] md:gap-10">
+            <p class="text-sm font-semibold text-forest">
+              <time datetime={auction.date}>{formatAuctionDate(auction.date)}</time>
+              {auction.time ? <span class="mt-1 block font-normal text-ink-soft">{auction.time}</span> : null}
+            </p>
+            <div>
+              <Title class="font-serif text-2xl leading-tight text-ink">{auction.title}</Title>
+              <p class="mt-2 text-ink">{auction.location}</p>
+              <p class="mt-2 max-w-xl text-pretty text-ink-soft">{auction.summary}</p>
+            </div>
+          </article>
+        </li>
+      ))}
+    </ol>
+  )
+}

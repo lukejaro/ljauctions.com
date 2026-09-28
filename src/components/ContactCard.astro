@@ -1,0 +1,105 @@
+---
+import Placeholder from "./Placeholder.astro";
+import { contact, contactFields, emailMailto, vcardFile } from "../data/site";
+
+interface Props {
+  tone?: "card" | "plain";
+  heading?: "h2" | "p";
+  /** Prefix field ids when more than one card is on the page. */
+  idPrefix?: string;
+}
+
+const { tone = "card", heading = "p", idPrefix = "" } = Astro.props;
+const fields = contactFields();
+const mailto = emailMailto();
+const Heading = heading;
+const isCard = tone === "card";
+---
+
+<address
+  class:list={[
+    "not-italic",
+    isCard
+      ? "border border-wood bg-paper px-6 py-8 shadow-[inset_0_0_0_1px_#f3eee4] sm:px-8"
+      : "on-dark text-cream",
+  ]}
+>
+  <div class="flex items-center gap-4">
+    <span
+      class:list={[
+        "grid h-12 w-12 shrink-0 place-items-center font-serif text-sm font-bold",
+        isCard ? "bg-forest text-cream" : "bg-cream text-forest",
+      ]}
+      aria-hidden="true"
+    >
+      LJ
+    </span>
+    <div>
+      <Heading class:list={["font-serif text-2xl leading-tight", isCard ? "text-ink" : "text-cream"]}>
+        {contact.contactName}
+      </Heading>
+      <p class:list={["text-sm", isCard ? "text-ink-soft" : "text-cream/80"]}>
+        {contact.role}, {contact.businessName}
+      </p>
+    </div>
+  </div>
+
+  <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+    <a
+      href={vcardFile.href}
+      download={vcardFile.filename}
+      type="text/vcard"
+      class:list={[
+        "inline-flex min-h-11 w-full items-center justify-center px-5 text-sm font-semibold sm:w-auto",
+        isCard ? "bg-forest text-cream hover:bg-forest-deep" : "bg-cream text-forest hover:bg-paper",
+      ]}
+    >
+      Add to contacts
+    </a>
+    <a
+      href={mailto}
+      class:list={[
+        "inline-flex min-h-11 w-full items-center justify-center px-5 text-sm font-semibold sm:w-auto",
+        isCard
+          ? "border border-forest text-forest hover:bg-cream-deep"
+          : "border border-cream/50 text-cream hover:bg-cream/10",
+      ]}
+    >
+      Email us
+    </a>
+  </div>
+
+  <dl class:list={["mt-6", isCard ? "divide-y divide-line" : "divide-y divide-cream/20"]}>
+    {
+      fields.map((field) => (
+        <div class="grid gap-1 py-3 sm:grid-cols-[8.5rem_1fr] sm:items-baseline sm:gap-4">
+          <dt
+            class:list={[
+              "text-xs font-semibold uppercase tracking-[0.14em]",
+              isCard ? "text-wood" : "text-brass",
+            ]}
+          >
+            {field.label}
+          </dt>
+          <dd id={`${idPrefix}${field.id}`} class:list={["text-base", isCard ? "text-ink" : "text-cream"]}>
+            {field.placeholder ? (
+              <Placeholder value={field.text} />
+            ) : field.href ? (
+              <a
+                href={field.href}
+                class:list={[
+                  "underline decoration-1 underline-offset-4",
+                  isCard ? "hover:text-forest" : "hover:text-brass",
+                ]}
+              >
+                {field.text}
+              </a>
+            ) : (
+              <span class="whitespace-pre-line">{field.text}</span>
+            )}
+          </dd>
+        </div>
+      ))
+    }
+  </dl>
+</address>
