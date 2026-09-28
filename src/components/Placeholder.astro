@@ -1,0 +1,12 @@
+---
+interface Props {
+  value: string;
+}
+
+const { value } = Astro.props;
+---
+
+<span class="placeholder">
+  <span class="sr-only">Placeholder: </span>
+  <span class="rounded-sm bg-cream-deep px-1.5 py-0.5 text-ink">{value}</span>
+</span>

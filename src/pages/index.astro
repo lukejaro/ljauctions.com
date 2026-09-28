@@ -1,0 +1,102 @@
+---
+import AuctionList from "../components/AuctionList.astro";
+import Placeholder from "../components/Placeholder.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import {
+  auctionCategories,
+  credibilityItems,
+  site,
+  upcomingAuctions,
+  upcomingFrom,
+} from "../data/site";
+
+const sales = upcomingFrom(upcomingAuctions);
+const nextSale = sales.slice(0, 1);
+const credibility = credibilityItems();
+---
+
+<BaseLayout title={site.name} description={site.description}>
+  <section class="on-dark bg-bark text-cream">
+    <div class="mx-auto max-w-5xl px-6 py-20 md:py-28">
+      <p class="text-xs font-semibold uppercase tracking-[0.22em] text-cream">Auctioneer</p>
+      <span class="mt-4 block h-px w-12 bg-brass" aria-hidden="true"></span>
+      <h1 class="mt-6 font-serif text-5xl leading-tight md:text-6xl">{site.name}</h1>
+      <p class="mt-5 max-w-xl text-xl text-pretty text-cream/90">{site.positioning}</p>
+      <div class="mt-10 flex flex-wrap gap-3">
+        <a
+          href="/auctions"
+          class="inline-flex min-h-11 items-center justify-center bg-cream px-5 text-sm font-semibold text-forest hover:bg-paper"
+        >
+          Upcoming auctions
+        </a>
+        <a
+          href="/contact"
+          class="inline-flex min-h-11 items-center justify-center border border-cream/70 px-5 text-sm font-semibold text-cream hover:bg-cream/10"
+        >
+          Contact
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Credibility" class="border-b border-line bg-cream-deep">
+    <dl class="mx-auto grid max-w-5xl gap-8 px-6 py-8 sm:grid-cols-3 sm:gap-6">
+      {
+        credibility.map((item) => (
+          <div>
+            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-wood">{item.label}</dt>
+            <dd class="mt-2 text-lg text-ink">
+              {item.placeholder ? <Placeholder value={item.text} /> : item.text}
+            </dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  <section class="mx-auto max-w-5xl px-6 py-16 md:py-20" aria-labelledby="what-we-auction">
+    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-forest">The work</p>
+    <h2 id="what-we-auction" class="mt-3 font-serif text-3xl text-ink md:text-4xl">What we auction</h2>
+    <ul class="mt-10 grid gap-6 sm:grid-cols-2">
+      {
+        auctionCategories.map((category, index) => (
+          <li class="border border-line bg-paper px-6 py-6">
+            <p class="font-serif text-sm text-wood" aria-hidden="true">
+              {String(index + 1).padStart(2, "0")}
+            </p>
+            <h3 class="mt-3 font-serif text-2xl leading-tight text-ink">{category.title}</h3>
+            <p class="mt-3 text-pretty text-ink-soft">{category.text}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="border-t border-line" aria-labelledby="next-sale">
+    <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
+      <p class="text-xs font-semibold uppercase tracking-[0.18em] text-forest">Calendar</p>
+      <h2 id="next-sale" class="mt-3 font-serif text-3xl text-ink md:text-4xl">Next sale</h2>
+      <div class="mt-8">
+        <AuctionList
+          auctions={nextSale}
+          emptyTitle="None scheduled"
+          emptyText="No sale is on the calendar. Dates will be posted here when they are set."
+          headingLevel="h3"
+          titleLevel="h3"
+        />
+      </div>
+      {
+        sales.length > 1 && (
+          <p class="mt-6">
+            <a
+              href="/auctions"
+              class="font-semibold text-forest underline decoration-1 underline-offset-4 hover:text-forest-deep"
+            >
+              See all upcoming auctions
+            </a>
+          </p>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>

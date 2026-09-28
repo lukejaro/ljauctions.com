@@ -1,0 +1,57 @@
+---
+import PageIntro from "../components/PageIntro.astro";
+import Placeholder from "../components/Placeholder.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { approach, credentialTodos, site } from "../data/site";
+---
+
+<BaseLayout
+  title="About"
+  description="How LJ Auctions prepares a sale and conducts the call. Biography and credentials are still to be confirmed."
+>
+  <PageIntro
+    eyebrow="About"
+    title="A measured call, and terms you can read."
+    lede={`${site.name} conducts live auctions. The work is the property, the written terms, and a call the room can follow.`}
+  />
+
+  <section class="mx-auto max-w-5xl px-6 py-16" aria-labelledby="approach">
+    <h2 id="approach" class="font-serif text-3xl text-ink">How a sale is run</h2>
+    <ol class="mt-8 grid gap-6 md:grid-cols-3">
+      {
+        approach.map((step, index) => (
+          <li class="border-t-2 border-forest bg-paper px-5 py-6">
+            <p class="font-serif text-sm text-wood">{String(index + 1).padStart(2, "0")}</p>
+            <h3 class="mt-3 font-serif text-xl leading-tight text-ink">{step.title}</h3>
+            <p class="mt-3 text-pretty text-ink-soft">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <section class="border-t border-line bg-cream-deep" aria-labelledby="credentials">
+    <div class="mx-auto max-w-5xl px-6 py-16">
+      <h2 id="credentials" class="font-serif text-3xl text-ink">Biography and credentials</h2>
+      <p class="mt-4 max-w-2xl text-pretty text-ink-soft">
+        These lines stay blank until they are confirmed. Nothing here is a claimed designation,
+        license, or year count.
+      </p>
+      <ul class="mt-8 max-w-2xl divide-y divide-line border-y border-line">
+        {
+          credentialTodos.map((item) => (
+            <li class="grid gap-2 py-4 sm:grid-cols-[14rem_1fr] sm:items-baseline">
+              <p class="text-sm font-semibold text-ink">
+                <span class="mr-2 text-xs font-semibold uppercase tracking-[0.14em] text-forest">TODO</span>
+                {item.label}
+              </p>
+              <p>
+                <Placeholder value={item.placeholder} />
+              </p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

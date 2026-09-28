@@ -1,0 +1,42 @@
+---
+import PageIntro from "../components/PageIntro.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { services } from "../data/site";
+---
+
+<BaseLayout
+  title="Services"
+  description="LJ Auctions calls auctions and prepares estate, equipment, and business property for public sale."
+>
+  <PageIntro
+    eyebrow="Services"
+    title="What LJ Auctions sells and calls."
+    lede="Live auctioneering, and the preparation that makes a sale bill worth reading. Categories below are the working list for the site."
+  />
+
+  <section class="mx-auto max-w-5xl px-6 py-16" aria-labelledby="offerings">
+    <h2 id="offerings" class="sr-only">Offerings</h2>
+    <ol class="divide-y divide-line border-y border-line">
+      {
+        services.map((service) => (
+          <li class="grid gap-3 py-8 md:grid-cols-[16rem_1fr] md:gap-10">
+            <h3 class="font-serif text-2xl leading-tight text-ink">{service.title}</h3>
+            <p class="max-w-xl text-pretty text-ink-soft">{service.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+    <p class="mt-8 max-w-2xl text-sm text-ink-soft">
+      <strong class="font-semibold uppercase tracking-[0.14em] text-forest">TODO:</strong>
+      Confirm which sale types and advertising channels should be listed before launch.
+    </p>
+    <p class="mt-8">
+      <a
+        href="/contact"
+        class="inline-flex min-h-11 items-center justify-center bg-forest px-5 text-sm font-semibold text-cream hover:bg-forest-deep"
+      >
+        Discuss a sale
+      </a>
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,21 @@
+---
+import ContactCard from "../components/ContactCard.astro";
+import PageIntro from "../components/PageIntro.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Contact"
+  description="Business contact card for LJ Auctions. Phone, email, service area, and address are published when confirmed."
+>
+  <PageIntro
+    eyebrow="Contact"
+    title="Reach LJ Auctions"
+    lede="Call, write, or visit using the card. Bracketed lines are placeholders until the business confirms them."
+  />
+
+  <section class="mx-auto max-w-xl px-6 py-16" aria-labelledby="contact-card-heading">
+    <h2 id="contact-card-heading" class="sr-only">Business contact card</h2>
+    <ContactCard />
+  </section>
+</BaseLayout>
