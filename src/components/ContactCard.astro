@@ -1,6 +1,6 @@
 ---
 import Placeholder from "./Placeholder.astro";
-import { contact, contactFields, emailMailto, site } from "../data/site";
+import { contact, contactFields, emailMailto, vcardFile } from "../data/site";
 
 interface Props {
   tone?: "card" | "plain";
@@ -36,13 +36,40 @@ const isCard = tone === "card";
     </span>
     <div>
       <Heading class:list={["font-serif text-2xl leading-tight", isCard ? "text-ink" : "text-cream"]}>
-        {contact.businessName}
+        {contact.contactName}
       </Heading>
-      <p class:list={["text-sm", isCard ? "text-ink-soft" : "text-cream/80"]}>{contact.role}</p>
+      <p class:list={["text-sm", isCard ? "text-ink-soft" : "text-cream/80"]}>
+        {contact.role}, {contact.businessName}
+      </p>
     </div>
   </div>
 
-  <dl class:list={["mt-8", isCard ? "divide-y divide-line" : "divide-y divide-cream/20"]}>
+  <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+    <a
+      href={vcardFile.href}
+      download={vcardFile.filename}
+      type="text/vcard"
+      class:list={[
+        "inline-flex min-h-11 w-full items-center justify-center px-5 text-sm font-semibold sm:w-auto",
+        isCard ? "bg-forest text-cream hover:bg-forest-deep" : "bg-cream text-forest hover:bg-paper",
+      ]}
+    >
+      Add to contacts
+    </a>
+    <a
+      href={mailto}
+      class:list={[
+        "inline-flex min-h-11 w-full items-center justify-center px-5 text-sm font-semibold sm:w-auto",
+        isCard
+          ? "border border-forest text-forest hover:bg-cream-deep"
+          : "border border-cream/50 text-cream hover:bg-cream/10",
+      ]}
+    >
+      Email us
+    </a>
+  </div>
+
+  <dl class:list={["mt-6", isCard ? "divide-y divide-line" : "divide-y divide-cream/20"]}>
     {
       fields.map((field) => (
         <div class="grid gap-1 py-3 sm:grid-cols-[8.5rem_1fr] sm:items-baseline sm:gap-4">
@@ -75,35 +102,4 @@ const isCard = tone === "card";
       ))
     }
   </dl>
-
-  <div class="mt-6">
-    {
-      mailto ? (
-        <a
-          href={mailto}
-          class:list={[
-            "inline-flex min-h-11 items-center justify-center px-5 text-sm font-semibold",
-            isCard
-              ? "bg-forest text-cream hover:bg-forest-deep"
-              : "border border-cream/50 text-cream hover:bg-cream/10",
-          ]}
-        >
-          Email us
-        </a>
-      ) : (
-        <a
-          href="/contact#email"
-          class:list={[
-            "inline-flex min-h-11 items-center justify-center px-5 text-sm font-semibold",
-            isCard
-              ? "bg-forest text-cream hover:bg-forest-deep"
-              : "border border-cream/50 text-cream hover:bg-cream/10",
-          ]}
-        >
-          Email us
-          <span class="sr-only"> — business email for {site.name} is not published yet</span>
-        </a>
-      )
-    }
-  </div>
 </address>

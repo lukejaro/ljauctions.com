@@ -1,12 +1,12 @@
 /**
  * Site copy and contact details.
  *
- * Leave a contact field null until Luke confirms it. Null fields render as
- * bracketed placeholders. Do not invent a phone number, inbox, street address,
- * or professional designation.
+ * Name, phone, and email are confirmed. Service area and address stay null
+ * until provided — null fields render as bracketed placeholders.
+ * Do not invent a street address or professional designation.
  *
- * Set `contact.email` to the real inbox and the "Email us" control becomes a
- * mailto link.
+ * `renderVcard()` is the contact file linked from the card. Astro rewrites
+ * `public/luke-jaroszewski.vcf` from it on startup.
  */
 
 export const site = {
@@ -21,17 +21,24 @@ export const site = {
 export const contact = {
   businessName: site.name,
   role: "Auctioneer",
-  /** TODO: public name to print on the card. */
-  contactName: null as string | null,
-  /** TODO: business phone. */
-  phone: null as string | null,
-  /** TODO: business inbox. */
-  email: null as string | null,
+  contactName: "Luke Jaroszewski",
+  givenName: "Luke",
+  familyName: "Jaroszewski",
+  /** Shown on the card. */
+  phoneDisplay: "(830) 743-1180",
+  /** E.164 number used by tel: links and the vCard. */
+  phoneTel: "+18307431180",
+  email: "luke.jaroszewski@gmail.com",
   /** TODO: counties or region served. */
   serviceArea: null as string | null,
   /** TODO: mailing or office address. Use line breaks for a multi-line address. */
   address: null as string | null,
 };
+
+export const vcardFile = {
+  href: "/luke-jaroszewski.vcf",
+  filename: "luke-jaroszewski.vcf",
+} as const;
 
 export type ContactField = {
   id: string;
@@ -51,7 +58,7 @@ export const contactPlaceholders = {
 
 export function contactFields(): ContactField[] {
   const name = display(contact.contactName, contactPlaceholders.contactName);
-  const phone = display(contact.phone, contactPlaceholders.phone);
+  const phone = display(contact.phoneDisplay, contactPlaceholders.phone);
   const email = display(contact.email, contactPlaceholders.email);
   const serviceArea = display(contact.serviceArea, contactPlaceholders.serviceArea);
   const address = display(contact.address, contactPlaceholders.address);
@@ -62,7 +69,7 @@ export function contactFields(): ContactField[] {
       id: "phone",
       label: "Phone",
       ...phone,
-      href: phone.placeholder ? undefined : phoneHref(phone.text),
+      href: phone.placeholder ? undefined : `tel:${contact.phoneTel}`,
     },
     {
       id: "email",
@@ -75,9 +82,24 @@ export function contactFields(): ContactField[] {
   ];
 }
 
-export function emailMailto(): string | null {
-  const email = contact.email?.trim();
-  return email ? `mailto:${email}` : null;
+export function emailMailto(): string {
+  return `mailto:${contact.email}`;
+}
+
+/** VCF 3.0, CRLF line endings, suitable for iOS and Android contact import. */
+export function renderVcard(): string {
+  const lines = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:${vcardEscape(contact.familyName)};${vcardEscape(contact.givenName)};;;`,
+    `FN:${vcardEscape(contact.contactName)}`,
+    `ORG:${vcardEscape(contact.businessName)}`,
+    `TITLE:${vcardEscape(contact.role)}`,
+    `TEL;TYPE=WORK,VOICE:${contact.phoneTel}`,
+    `EMAIL;TYPE=INTERNET:${contact.email}`,
+    "END:VCARD",
+  ];
+  return `${lines.join("\r\n")}\r\n`;
 }
 
 /** Confirmed credentials only. Null stays a placeholder — do not invent designations. */
@@ -244,7 +266,11 @@ function display(value: string | null, placeholder: string): { text: string; pla
   return { text: placeholder, placeholder: true };
 }
 
-function phoneHref(phone: string): string {
-  const digits = phone.replace(/[^\d+]/g, "");
-  return `tel:${digits}`;
+function vcardEscape(value: string): string {
+  return value
+    .replaceAll("\\", "\\\\")
+    .replaceAll("\r\n", "\\n")
+    .replaceAll("\n", "\\n")
+    .replaceAll(",", "\\,")
+    .replaceAll(";", "\\;");
 }

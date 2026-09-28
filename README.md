@@ -48,6 +48,7 @@ Any static host can serve `dist` the same way (Netlify, Cloudflare Pages, or sim
 
 Contact details, credentials, services, and the auction calendar live in [`src/data/site.ts`](src/data/site.ts).
 
-- Leave a contact field `null` to keep its bracketed placeholder. Do not invent a phone number, email address, street address, or professional designation.
-- Set `contact.email` to the real inbox. The card’s “Email us” link then becomes a `mailto:`.
+- Name, phone, and email are published on the contact card. The phone is shown as `(830) 743-1180` and linked as `tel:+18307431180`.
+- Leave service area or address `null` to keep that bracketed placeholder. Do not invent a street address or professional designation.
+- “Add to contacts” downloads [`public/luke-jaroszewski.vcf`](public/luke-jaroszewski.vcf). Astro rewrites that file from `renderVcard()` when it starts. On Netlify the file is served as `text/vcard` with an attachment filename.
 - Add sales to `upcomingAuctions`. An empty list renders “None scheduled” on the home teaser and the auctions page. Dates already past are omitted on the next build.

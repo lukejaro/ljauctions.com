@@ -18,3 +18,10 @@ Permissions-Policy = "camera=(), microphone=(), geolocation=()"
 for = "/_astro/*"
 [headers.values]
 Cache-Control = "public, max-age=31536000, immutable"
+
+# Static vCard. Phones use the content type to open Add Contact.
+[[headers]]
+for = "/luke-jaroszewski.vcf"
+[headers.values]
+  Content-Type = "text/vcard; charset=utf-8"
+  Content-Disposition = "attachment; filename=\"luke-jaroszewski.vcf\""

@@ -21,6 +21,7 @@
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
     "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^22.20.4",
     "tailwindcss": "^4.3.3",
     "typescript": "5.9"
   }
