@@ -380,7 +380,7 @@ footer address::after {
 }
 
 /* Desktop story: one paper stage stays pinned. The four categories take turns inside it. */
-@media (min-width: 1000px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
+@media (min-width: 1000px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .work {
       height: 360vh;
