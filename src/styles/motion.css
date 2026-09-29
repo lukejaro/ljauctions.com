@@ -82,10 +82,10 @@
 
 @keyframes index-step-0 {
   0%,
-  18% {
+  22% {
     opacity: 1;
   }
-  25%,
+  23%,
   100% {
     opacity: 0.35;
   }
@@ -93,14 +93,14 @@
 
 @keyframes index-step-1 {
   0%,
-  18% {
+  22% {
     opacity: 0.35;
   }
-  25%,
-  43% {
+  23%,
+  47% {
     opacity: 1;
   }
-  50%,
+  48%,
   100% {
     opacity: 0.35;
   }
@@ -108,14 +108,14 @@
 
 @keyframes index-step-2 {
   0%,
-  43% {
+  47% {
     opacity: 0.35;
   }
-  50%,
-  68% {
+  48%,
+  72% {
     opacity: 1;
   }
-  75%,
+  73%,
   100% {
     opacity: 0.35;
   }
@@ -123,10 +123,10 @@
 
 @keyframes index-step-3 {
   0%,
-  68% {
+  72% {
     opacity: 0.35;
   }
-  75%,
+  73%,
   100% {
     opacity: 1;
   }
@@ -134,63 +134,53 @@
 
 @keyframes work-step-0 {
   0%,
-  18% {
+  22% {
     opacity: 1;
-    transform: none;
   }
-  25%,
+  23%,
   100% {
     opacity: 0;
-    transform: translateY(-1rem);
   }
 }
 
 @keyframes work-step-1 {
   0%,
-  18% {
+  22% {
     opacity: 0;
-    transform: translateY(1.15rem);
   }
-  25%,
-  43% {
+  23%,
+  47% {
     opacity: 1;
-    transform: none;
   }
-  50%,
+  48%,
   100% {
     opacity: 0;
-    transform: translateY(-1rem);
   }
 }
 
 @keyframes work-step-2 {
   0%,
-  43% {
+  47% {
     opacity: 0;
-    transform: translateY(1.15rem);
   }
-  50%,
-  68% {
+  48%,
+  72% {
     opacity: 1;
-    transform: none;
   }
-  75%,
+  73%,
   100% {
     opacity: 0;
-    transform: translateY(-1rem);
   }
 }
 
 @keyframes work-step-3 {
   0%,
-  68% {
+  72% {
     opacity: 0;
-    transform: translateY(1.15rem);
   }
-  75%,
+  73%,
   100% {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -443,7 +433,7 @@ footer address::after {
 @media (min-width: 1000px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
     .work {
-      height: 250vh;
+      height: 180vh;
       padding-top: 0;
       padding-bottom: 0;
       view-timeline-name: --work;
@@ -519,7 +509,8 @@ footer address::after {
     .work-list {
       position: relative;
       display: block;
-      height: 22rem;
+      height: 19rem;
+      overflow: hidden;
       margin-top: 0.25rem;
     }
 
