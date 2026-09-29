@@ -1,9 +1,10 @@
 ---
 import ContactCard from "./ContactCard.astro";
-import { isCurrentPath, nav, site } from "../data/site";
+import { isCurrentPath, nav, site, texasAuctioneerLicenseLine } from "../data/site";
 
 const pathname = Astro.url.pathname;
 const year = new Date().getFullYear();
+const licenseLine = texasAuctioneerLicenseLine();
 ---
 
 <footer class="on-dark mt-auto bg-bark text-cream" transition:name="site-footer" transition:animate="none">
@@ -43,8 +44,9 @@ const year = new Date().getFullYear();
     </div>
   </div>
   <div class="border-t border-cream/15">
-    <p class="mx-auto max-w-5xl px-6 py-4 text-sm text-cream/75">
-      © {year} {site.name}
+    <p class="mx-auto flex max-w-5xl flex-col gap-1 px-6 py-4 text-sm text-cream/75 sm:flex-row sm:items-baseline sm:justify-between">
+      <span>© {year} {site.name}</span>
+      {licenseLine && <span>{licenseLine}</span>}
     </p>
   </div>
 </footer>

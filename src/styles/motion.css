@@ -306,6 +306,10 @@ footer address::after {
       animation-range: entry 26% entry 64%;
     }
 
+    .reveal-group > *:nth-child(6) {
+      animation-range: entry 32% entry 70%;
+    }
+
     .wipe {
       animation: wipe-in linear both;
       animation-timeline: view();

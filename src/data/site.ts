@@ -102,6 +102,26 @@ export function renderVcard(): string {
   return `${lines.join("\r\n")}\r\n`;
 }
 
+/**
+ * Texas auctioneer license number (TDLR). The only place this number is stored.
+ * An empty string hides the license line on the contact card, in the footer, and on About.
+ */
+export const texasAuctioneerLicense = "18590";
+
+export function texasAuctioneerLicenseLine(): string | null {
+  const number = texasAuctioneerLicense.trim();
+  if (!number) return null;
+  return `Texas Auctioneer License #${number}`;
+}
+
+/** Confirmed nonprofit work. The home strip uses `stat`; About and Services use `sentence`. */
+export const nonprofitWork = {
+  label: "Nonprofits",
+  stat: "Trusted by 100+ nonprofits",
+  sentence:
+    "I've helped more than 100 nonprofits raise money, including benefit and charity auctions.",
+} as const;
+
 /** Confirmed credentials only. Null stays a placeholder — do not invent designations. */
 export const credentials = {
   designations: null as string | null,
@@ -116,6 +136,11 @@ export type DisplayValue = {
 
 export function credibilityItems(): DisplayValue[] {
   return [
+    {
+      label: nonprofitWork.label,
+      text: nonprofitWork.stat,
+      placeholder: false,
+    },
     {
       label: "Designations",
       ...display(credentials.designations, "[Professional designations]"),
@@ -166,6 +191,10 @@ export const services = [
   {
     title: "Business and inventory",
     text: "Closing stock, fixtures, and surplus offered in one sale or a short series, with a lot order set before the date.",
+  },
+  {
+    title: "Benefit and charity auctions",
+    text: nonprofitWork.sentence,
   },
   {
     title: "Sale preparation",
