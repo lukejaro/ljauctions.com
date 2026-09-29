@@ -1,0 +1,490 @@
+/* Scroll and entrance motion. Off unless the browser supports scroll timelines
+   and the visitor has not asked for reduced motion. Base styles stay visible. */
+
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.15rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes reveal-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.6rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hero-drift {
+  to {
+    transform: translate3d(0, -14vh, 0);
+  }
+}
+
+@keyframes hero-drift-slow {
+  to {
+    transform: translate3d(0, 8vh, 0);
+  }
+}
+
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes scroll-grow {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes wipe-in {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    transform: translateY(-0.6rem);
+  }
+}
+
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(1.1rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes work-hold-0 {
+  0%,
+  30% {
+    opacity: 1;
+  }
+  31%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes work-hold-1 {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  31%,
+  52% {
+    opacity: 1;
+  }
+  53%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes work-hold-2 {
+  0%,
+  52% {
+    opacity: 0;
+  }
+  53%,
+  74% {
+    opacity: 1;
+  }
+  75%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes work-hold-3 {
+  0%,
+  74% {
+    opacity: 0;
+  }
+  75%,
+  100% {
+    opacity: 1;
+  }
+}
+
+.scroll-progress {
+  display: none;
+}
+
+.on-dark {
+  position: relative;
+  isolation: isolate;
+}
+
+.on-dark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.28;
+  mix-blend-mode: soft-light;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 160px 160px;
+}
+
+.on-dark > * {
+  position: relative;
+  z-index: 1;
+}
+
+.on-dark > .hero-wash,
+.on-dark > .hero-mark {
+  position: absolute;
+  z-index: 0;
+}
+
+.hero {
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(100svh - 4.75rem);
+  overflow: clip;
+}
+
+.hero-wash,
+.hero-mark {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-wash {
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 18% 0%, rgba(28, 59, 50, 0.72), transparent 58%),
+    radial-gradient(ellipse at 100% 100%, rgba(110, 75, 42, 0.45), transparent 46%);
+}
+
+.hero-mark {
+  right: 10vw;
+  bottom: 1.25rem;
+  z-index: 0;
+  max-width: 46vw;
+  overflow: hidden;
+  font-family: var(--font-serif);
+  font-size: clamp(4.75rem, 12vw, 10rem);
+  line-height: 0.8;
+  color: rgba(243, 238, 228, 0.08);
+}
+
+.hero-copy {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  padding-bottom: clamp(2.75rem, 8vh, 5.5rem);
+}
+
+.hero-rule {
+  transform-origin: left center;
+}
+
+.work-index,
+.work-rail {
+  display: none;
+}
+
+.work-list {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+
+@media (min-width: 640px) {
+  .work-list {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+footer address {
+  position: relative;
+}
+
+footer address::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: var(--color-brass);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-item {
+    animation: rise-in 0.95s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .hero-item:nth-child(1) {
+    animation-delay: 0.08s;
+  }
+
+  .hero-item:nth-child(2) {
+    animation-delay: 0.18s;
+  }
+
+  .hero-item:nth-child(3) {
+    animation-delay: 0.32s;
+  }
+
+  .hero-item:nth-child(4) {
+    animation-delay: 0.46s;
+  }
+
+  .hero-item:nth-child(5) {
+    animation-delay: 0.58s;
+  }
+
+  .hero-rule {
+    animation: rule-draw 0.9s 0.22s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .page-intro .intro-copy > * {
+    animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .page-intro .intro-copy > *:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+
+  .page-intro .intro-copy > *:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+
+  @supports (animation-timeline: view()) {
+    .reveal,
+    .reveal-group > * {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 38%;
+    }
+
+    .reveal-group > *:nth-child(2) {
+      animation-range: entry 8% entry 46%;
+    }
+
+    .reveal-group > *:nth-child(3) {
+      animation-range: entry 14% entry 52%;
+    }
+
+    .reveal-group > *:nth-child(4) {
+      animation-range: entry 20% entry 58%;
+    }
+
+    .reveal-group > *:nth-child(5) {
+      animation-range: entry 26% entry 64%;
+    }
+
+    .wipe {
+      animation: wipe-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 42%;
+    }
+
+    .work-card {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 40%;
+    }
+
+    .work-list > .work-card:nth-child(2) {
+      animation-range: entry 8% entry 48%;
+    }
+
+    .work-list > .work-card:nth-child(3) {
+      animation-range: entry 14% entry 54%;
+    }
+
+    .work-list > .work-card:nth-child(4) {
+      animation-range: entry 20% entry 60%;
+    }
+
+    .hero-mark {
+      animation: hero-drift linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    .hero-wash {
+      animation: hero-drift-slow linear both;
+      animation-timeline: view();
+      animation-range: cover 0% cover 100%;
+    }
+
+    footer address::after {
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 8% cover 32%;
+    }
+
+    footer .footer-copy,
+    footer .footer-card {
+      animation: reveal-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 36%;
+    }
+
+    footer .footer-card {
+      animation-range: entry 10% entry 48%;
+    }
+  }
+
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 40;
+      width: 100%;
+      height: 2px;
+      background: var(--color-brass);
+      transform: scaleX(0);
+      transform-origin: left center;
+      animation: scroll-grow linear both;
+      animation-timeline: scroll(root);
+      pointer-events: none;
+    }
+  }
+}
+
+/* Desktop story: one paper stage stays pinned. The four categories take turns inside it. */
+@media (min-width: 1000px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .work {
+      height: 360vh;
+      padding-top: 0;
+      padding-bottom: 0;
+      view-timeline-name: --work;
+      view-timeline-axis: block;
+    }
+
+    .work-pin {
+      position: sticky;
+      top: 4.85rem;
+      display: grid;
+      grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: stretch;
+      height: calc(100svh - 4.85rem);
+      padding: 1.75rem 0;
+    }
+
+    .work-intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .work-index,
+    .work-rail {
+      display: none;
+    }
+
+    .work-list {
+      position: relative;
+      display: block;
+      height: auto;
+      min-height: 0;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--color-line);
+      background: var(--color-paper);
+    }
+
+    .work-list > .work-card:nth-child(n) {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0;
+      padding: 2.75rem 2.5rem;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --work;
+      animation-range: 0% 100%;
+      background: var(--color-paper);
+    }
+
+    .work-card-0 {
+      animation-name: work-hold-0;
+    }
+
+    .work-card-1 {
+      animation-name: work-hold-1;
+    }
+
+    .work-card-2 {
+      animation-name: work-hold-2;
+    }
+
+    .work-card-3 {
+      animation-name: work-hold-3;
+    }
+
+    .work-list > .work-card:nth-child(n) > p:first-child {
+      margin: 0;
+      font-size: clamp(3.25rem, 5vw, 4.75rem);
+      line-height: 0.9;
+      color: var(--color-wood);
+    }
+
+    .work-list > .work-card:nth-child(n) h3 {
+      max-width: 16ch;
+      margin-top: 0.85rem;
+      font-size: clamp(1.85rem, 2.4vw, 2.35rem);
+    }
+
+    .work-list > .work-card:nth-child(n) > p:last-child {
+      max-width: 38ch;
+      margin-top: 0.85rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-progress,
+  footer address::after {
+    display: none;
+  }
+
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
