@@ -4,9 +4,31 @@ import "@fontsource/source-sans-3/latin-600.css";
 import "@fontsource/libre-baskerville/latin-400.css";
 import "@fontsource/libre-baskerville/latin-700.css";
 import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import { contact, site } from "../data/site";
+
+const pageRise = {
+  forwards: {
+    old: { name: "vt-out", duration: "0.28s", easing: "ease", fillMode: "both" },
+    new: {
+      name: "vt-in",
+      duration: "0.55s",
+      easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+      fillMode: "both",
+    },
+  },
+  backwards: {
+    old: { name: "vt-out", duration: "0.28s", easing: "ease", fillMode: "both" },
+    new: {
+      name: "vt-in",
+      duration: "0.55s",
+      easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+      fillMode: "both",
+    },
+  },
+};
 
 interface Props {
   title: string;
@@ -36,6 +58,7 @@ if (contact.serviceArea) structuredData.areaServed = contact.serviceArea;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#1c3b32" />
+    <ClientRouter />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href={canonical} />
     <meta property="og:title" content={pageTitle} />
@@ -56,8 +79,9 @@ if (contact.serviceArea) structuredData.areaServed = contact.serviceArea;
     >
       Skip to content
     </a>
+    <div class="scroll-progress" aria-hidden="true"></div>
     <Header />
-    <main id="main" tabindex="-1" class="flex-1 outline-none">
+    <main id="main" tabindex="-1" class="flex-1 outline-none" transition:name="page" transition:animate={pageRise}>
       <slot />
     </main>
     <Footer />

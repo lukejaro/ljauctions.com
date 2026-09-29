@@ -8,6 +8,8 @@ Marketing site for [ljauctions.com](https://ljauctions.com). Five static pages, 
 - [Tailwind CSS](https://tailwindcss.com) 4
 - TypeScript
 
+Motion is part of the pages: a scroll progress rule, a hero that settles in, sections that reveal as they enter, and a pinned crossfade through “What we auction” on a tall desktop window. Page changes crossfade the main column. With `prefers-reduced-motion: reduce`, those animations are off and every section is the static layout. Nothing is hidden behind JavaScript.
+
 ## Pages
 
 | Path | Page |

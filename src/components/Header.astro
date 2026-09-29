@@ -4,8 +4,8 @@ import { isCurrentPath, nav, site } from "../data/site";
 const pathname = Astro.url.pathname;
 ---
 
-<div class="h-1 bg-forest" aria-hidden="true"></div>
-<header class="sticky top-0 z-30 border-b border-line bg-cream">
+<div class="h-1 bg-forest" aria-hidden="true" transition:name="brand-rule" transition:animate="none"></div>
+<header class="sticky top-0 z-30 border-b border-line bg-cream" transition:name="site-header" transition:animate="none">
   <div class="relative mx-auto flex max-w-5xl items-center justify-between gap-4 px-6">
     <a href="/" class="flex min-h-16 items-center gap-3 py-3">
       <span
