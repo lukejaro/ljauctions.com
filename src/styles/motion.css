@@ -80,6 +80,58 @@
   }
 }
 
+@keyframes work-hold-0 {
+  0%,
+  30% {
+    opacity: 1;
+  }
+  31%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes work-hold-1 {
+  0%,
+  30% {
+    opacity: 0;
+  }
+  31%,
+  52% {
+    opacity: 1;
+  }
+  53%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes work-hold-2 {
+  0%,
+  52% {
+    opacity: 0;
+  }
+  53%,
+  74% {
+    opacity: 1;
+  }
+  75%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes work-hold-3 {
+  0%,
+  74% {
+    opacity: 0;
+  }
+  75%,
+  100% {
+    opacity: 1;
+  }
+}
+
 .scroll-progress {
   display: none;
 }
@@ -134,13 +186,15 @@
 }
 
 .hero-mark {
-  right: 6vw;
-  bottom: 0.35rem;
+  right: 10vw;
+  bottom: 1.25rem;
   z-index: 0;
+  max-width: 46vw;
+  overflow: hidden;
   font-family: var(--font-serif);
-  font-size: clamp(5.5rem, 16vw, 13rem);
+  font-size: clamp(4.75rem, 12vw, 10rem);
   line-height: 0.8;
-  color: rgba(243, 238, 228, 0.07);
+  color: rgba(243, 238, 228, 0.08);
 }
 
 .hero-copy {
@@ -325,94 +379,100 @@ footer address::after {
   }
 }
 
-/* Desktop story: each category is a full sheet. The next sheet slides up and covers the last. */
+/* Desktop story: one paper stage stays pinned. The four categories take turns inside it. */
 @media (min-width: 1000px) and (min-height: 720px) and (prefers-reduced-motion: no-preference) {
-  .work {
-    padding-top: 3.5rem;
-    padding-bottom: 0;
-  }
+  @supports (animation-timeline: view()) {
+    .work {
+      height: 360vh;
+      padding-top: 0;
+      padding-bottom: 0;
+      view-timeline-name: --work;
+      view-timeline-axis: block;
+    }
 
-  .work-pin {
-    display: grid;
-    grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
-    gap: 2.5rem;
-    align-items: start;
-  }
+    .work-pin {
+      position: sticky;
+      top: 4.85rem;
+      display: grid;
+      grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
+      gap: 2.5rem;
+      align-items: stretch;
+      height: calc(100svh - 4.85rem);
+      padding: 1.75rem 0;
+    }
 
-  .work-intro {
-    position: sticky;
-    top: 6.25rem;
-    z-index: 6;
-  }
+    .work-intro {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-  .work-index,
-  .work-rail {
-    display: none;
-  }
+    .work-index,
+    .work-rail {
+      display: none;
+    }
 
-  .work-list {
-    display: block;
-    height: auto;
-    margin-top: 0;
-    overflow: visible;
-  }
+    .work-list {
+      position: relative;
+      display: block;
+      height: auto;
+      min-height: 0;
+      margin: 0;
+      overflow: hidden;
+      border: 1px solid var(--color-line);
+      background: var(--color-paper);
+    }
 
-  .work-list > .work-card:nth-child(n) {
-    position: sticky;
-    top: 4.85rem;
-    z-index: 1;
-    display: grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    column-gap: 1.75rem;
-    align-content: center;
-    align-items: center;
-    min-height: calc(100svh - 8.75rem);
-    margin: 0;
-    padding: 2.5rem 2.25rem;
-    animation: none;
-    opacity: 1;
-    transform: none;
-    background-color: var(--color-paper);
-  }
+    .work-list > .work-card:nth-child(n) {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      margin: 0;
+      padding: 2.75rem 2.5rem;
+      animation-duration: auto;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: --work;
+      animation-range: 0% 100%;
+      background: var(--color-paper);
+    }
 
-  .work-list > .work-card:nth-child(n + 2) {
-    border-top: 2px solid var(--color-brass);
-    box-shadow: 0 -18px 40px rgba(36, 25, 16, 0.12);
-  }
+    .work-card-0 {
+      animation-name: work-hold-0;
+    }
 
-  .work-list > .work-card:nth-child(2) {
-    z-index: 2;
-  }
+    .work-card-1 {
+      animation-name: work-hold-1;
+    }
 
-  .work-list > .work-card:nth-child(3) {
-    z-index: 3;
-  }
+    .work-card-2 {
+      animation-name: work-hold-2;
+    }
 
-  .work-list > .work-card:nth-child(4) {
-    z-index: 4;
-  }
+    .work-card-3 {
+      animation-name: work-hold-3;
+    }
 
-  .work-list > .work-card:nth-child(n) > p:first-child {
-    grid-column: 1;
-    grid-row: 1 / span 2;
-    font-size: clamp(4.5rem, 7vw, 6.5rem);
-    line-height: 0.85;
-    color: var(--color-wood);
-  }
+    .work-list > .work-card:nth-child(n) > p:first-child {
+      margin: 0;
+      font-size: clamp(3.25rem, 5vw, 4.75rem);
+      line-height: 0.9;
+      color: var(--color-wood);
+    }
 
-  .work-list > .work-card:nth-child(n) h3 {
-    grid-column: 2;
-    align-self: end;
-    max-width: 16ch;
-    margin-top: 0;
-    font-size: clamp(1.85rem, 2.4vw, 2.35rem);
-  }
+    .work-list > .work-card:nth-child(n) h3 {
+      max-width: 16ch;
+      margin-top: 0.85rem;
+      font-size: clamp(1.85rem, 2.4vw, 2.35rem);
+    }
 
-  .work-list > .work-card:nth-child(n) > p:last-child {
-    grid-column: 2;
-    align-self: start;
-    max-width: 38ch;
-    margin-top: 0.75rem;
+    .work-list > .work-card:nth-child(n) > p:last-child {
+      max-width: 38ch;
+      margin-top: 0.85rem;
+    }
   }
 }
 
