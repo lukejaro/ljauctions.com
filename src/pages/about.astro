@@ -2,7 +2,7 @@
 import PageIntro from "../components/PageIntro.astro";
 import Placeholder from "../components/Placeholder.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { approach, credentialTodos, site } from "../data/site";
+import { approach, credentialTodos, nonprofitWork, site, texasAuctioneerLicenseLine } from "../data/site";
 ---
 
 <BaseLayout
@@ -28,15 +28,21 @@ import { approach, credentialTodos, site } from "../data/site";
         ))
       }
     </ol>
+    <p class="reveal mt-10 max-w-2xl text-pretty text-lg text-ink">{nonprofitWork.sentence}</p>
   </section>
 
   <section class="reveal border-t border-line bg-cream-deep" aria-labelledby="credentials">
     <div class="mx-auto max-w-5xl px-6 py-16">
       <h2 id="credentials" class="font-serif text-3xl text-ink">Biography and credentials</h2>
       <p class="mt-4 max-w-2xl text-pretty text-ink-soft">
-        These lines stay blank until they are confirmed. Nothing here is a claimed designation,
-        license, or year count.
+        The license number is confirmed. The other lines stay blank until they are confirmed.
+        Nothing else here is a claimed designation or year count.
       </p>
+      {
+        texasAuctioneerLicenseLine() && (
+          <p class="mt-6 text-sm font-semibold tracking-wide text-ink">{texasAuctioneerLicenseLine()}</p>
+        )
+      }
       <ul class="mt-8 max-w-2xl divide-y divide-line border-y border-line">
         {
           credentialTodos.map((item) => (

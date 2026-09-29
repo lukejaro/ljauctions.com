@@ -1,6 +1,6 @@
 ---
 import Placeholder from "./Placeholder.astro";
-import { contact, contactFields, emailMailto, vcardFile } from "../data/site";
+import { contact, contactFields, emailMailto, texasAuctioneerLicenseLine, vcardFile } from "../data/site";
 
 interface Props {
   tone?: "card" | "plain";
@@ -12,6 +12,7 @@ interface Props {
 const { tone = "card", heading = "p", idPrefix = "" } = Astro.props;
 const fields = contactFields();
 const mailto = emailMailto();
+const licenseLine = texasAuctioneerLicenseLine();
 const Heading = heading;
 const isCard = tone === "card";
 ---
@@ -41,6 +42,11 @@ const isCard = tone === "card";
       <p class:list={["text-sm", isCard ? "text-ink-soft" : "text-cream/80"]}>
         {contact.role}, {contact.businessName}
       </p>
+      {
+        licenseLine && (
+          <p class:list={["mt-2 text-sm", isCard ? "text-ink-soft" : "text-cream/75"]}>{licenseLine}</p>
+        )
+      }
     </div>
   </div>
 
