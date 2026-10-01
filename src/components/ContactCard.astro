@@ -1,5 +1,4 @@
 ---
-import Placeholder from "./Placeholder.astro";
 import { contact, contactFields, emailMailto, texasAuctioneerLicenseLine, vcardFile } from "../data/site";
 
 interface Props {
@@ -10,7 +9,7 @@ interface Props {
 }
 
 const { tone = "card", heading = "p", idPrefix = "" } = Astro.props;
-const fields = contactFields();
+const fields = contactFields().filter((field) => !field.placeholder);
 const mailto = emailMailto();
 const licenseLine = texasAuctioneerLicenseLine();
 const Heading = heading;
@@ -88,9 +87,7 @@ const isCard = tone === "card";
             {field.label}
           </dt>
           <dd id={`${idPrefix}${field.id}`} class:list={["text-base", isCard ? "text-ink" : "text-cream"]}>
-            {field.placeholder ? (
-              <Placeholder value={field.text} />
-            ) : field.href ? (
+            {field.href ? (
               <a
                 href={field.href}
                 class:list={[

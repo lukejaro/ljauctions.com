@@ -2,11 +2,12 @@
 import OrgLogos from "../components/OrgLogos.astro";
 import PageIntro from "../components/PageIntro.astro";
 import PhotoGrid from "../components/PhotoGrid.astro";
-import Placeholder from "../components/Placeholder.astro";
 import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { aboutShots, portraitPhoto } from "../data/photos";
 import { approach, credentialTodos, site, story, texasAuctioneerLicenseLine } from "../data/site";
+
+const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim());
 ---
 
 <BaseLayout
@@ -72,30 +73,23 @@ import { approach, credentialTodos, site, story, texasAuctioneerLicenseLine } fr
   <section class="reveal border-t border-line bg-cream-deep" aria-labelledby="credentials">
     <div class="mx-auto max-w-5xl px-6 py-16">
       <h2 id="credentials" class="font-serif text-3xl text-ink">Biography and credentials</h2>
-      <p class="mt-4 max-w-2xl text-pretty text-ink-soft">
-        The license number is confirmed. The other lines stay blank until they are confirmed.
-        Nothing else here is a claimed designation or year count.
-      </p>
       {
         texasAuctioneerLicenseLine() && (
           <p class="mt-6 text-sm font-semibold tracking-wide text-ink">{texasAuctioneerLicenseLine()}</p>
         )
       }
-      <ul class="mt-8 max-w-2xl divide-y divide-line border-y border-line">
-        {
-          credentialTodos.map((item) => (
-            <li class="grid gap-2 py-4 sm:grid-cols-[14rem_1fr] sm:items-baseline">
-              <p class="text-sm font-semibold text-ink">
-                <span class="mr-2 text-xs font-semibold uppercase tracking-[0.14em] text-forest">TODO</span>
-                {item.label}
-              </p>
-              <p>
-                <Placeholder value={item.placeholder} />
-              </p>
-            </li>
-          ))
-        }
-      </ul>
+      {
+        confirmedCredentials.length > 0 && (
+          <ul class="mt-8 max-w-2xl divide-y divide-line border-y border-line">
+            {confirmedCredentials.map((item) => (
+              <li class="grid gap-2 py-4 sm:grid-cols-[14rem_1fr] sm:items-baseline">
+                <p class="text-sm font-semibold text-ink">{item.label}</p>
+                <p class="text-ink">{item.value}</p>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </div>
   </section>
 </BaseLayout>

@@ -281,13 +281,16 @@ export const approach = [
   },
 ] as const;
 
-/** Biography and credentials still to be confirmed. Rendered on the About page. */
+/**
+ * Biography and credentials still to be confirmed.
+ * A null `value` is omitted from the page. Fill `value` and the row appears.
+ */
 export const credentialTodos = [
-  { label: "Full name and role", placeholder: "[Full name and role]" },
-  { label: "Biography", placeholder: "[Short biography]" },
-  { label: "Professional designations", placeholder: "[Professional designations]" },
-  { label: "Years calling auctions", placeholder: "[Years calling auctions]" },
-  { label: "Markets served", placeholder: "[Markets served]" },
+  { label: "Full name and role", value: null as string | null, placeholder: "[Full name and role]" },
+  { label: "Biography", value: null as string | null, placeholder: "[Short biography]" },
+  { label: "Professional designations", value: null as string | null, placeholder: "[Professional designations]" },
+  { label: "Years calling auctions", value: null as string | null, placeholder: "[Years calling auctions]" },
+  { label: "Markets served", value: null as string | null, placeholder: "[Markets served]" },
 ] as const;
 
 export type Auction = {
