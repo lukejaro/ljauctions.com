@@ -1,19 +1,58 @@
 ---
+import OrgLogos from "../components/OrgLogos.astro";
 import PageIntro from "../components/PageIntro.astro";
+import PhotoGrid from "../components/PhotoGrid.astro";
 import Placeholder from "../components/Placeholder.astro";
+import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { approach, credentialTodos, nonprofitWork, site, texasAuctioneerLicenseLine } from "../data/site";
+import { aboutShots, portraitPhoto } from "../data/photos";
+import { approach, credentialTodos, site, story, texasAuctioneerLicenseLine } from "../data/site";
 ---
 
 <BaseLayout
   title="About"
-  description="How LJ Auctions prepares a sale and conducts the call. Biography and credentials are still to be confirmed."
+  description="Luke Jaroszewski started auctioneering at 18 and has called hundreds of auctions for nonprofits. Texas Auctioneer License #18590."
 >
   <PageIntro
     eyebrow="About"
     title="A measured call, and terms you can read."
     lede={`${site.name} conducts live auctions. The work is the property, the written terms, and a call the room can follow.`}
   />
+
+  <section class="mx-auto max-w-5xl px-6 py-16" aria-labelledby="my-story">
+    <div class="grid items-start gap-10 md:grid-cols-[minmax(14rem,18rem)_minmax(0,1fr)]">
+      <figure class="shot-frame portrait-frame mx-auto w-full max-w-xs">
+        <Shot
+          src={portraitPhoto.src}
+          alt={portraitPhoto.alt}
+          widths={[...portraitPhoto.widths]}
+          sizes="(min-width: 768px) 18rem, min(20rem, calc(100vw - 3rem))"
+          position={portraitPhoto.position}
+        />
+      </figure>
+      <div>
+        <p class="reveal text-xs font-semibold uppercase tracking-[0.18em] text-forest">About</p>
+        <h2 id="my-story" class="reveal mt-3 font-serif text-3xl text-ink md:text-4xl">{story.heading}</h2>
+        <div class="mt-6 max-w-2xl space-y-4 text-lg text-pretty text-ink">
+          {story.paragraphs.map((paragraph) => <p class="reveal">{paragraph}</p>)}
+        </div>
+        {
+          texasAuctioneerLicenseLine() && (
+            <p class="reveal mt-6 text-sm font-semibold tracking-wide text-ink">{texasAuctioneerLicenseLine()}</p>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <OrgLogos />
+
+  <section class="mx-auto max-w-5xl px-6 py-16" aria-labelledby="photos">
+    <h2 id="photos" class="reveal font-serif text-3xl text-ink">At a sale</h2>
+    <div class="mt-8">
+      <PhotoGrid shots={aboutShots} labelledBy="photos" />
+    </div>
+  </section>
 
   <section class="mx-auto max-w-5xl px-6 py-16" aria-labelledby="approach">
     <h2 id="approach" class="reveal font-serif text-3xl text-ink">How a sale is run</h2>
@@ -28,7 +67,6 @@ import { approach, credentialTodos, nonprofitWork, site, texasAuctioneerLicenseL
         ))
       }
     </ol>
-    <p class="reveal mt-10 max-w-2xl text-pretty text-lg text-ink">{nonprofitWork.sentence}</p>
   </section>
 
   <section class="reveal border-t border-line bg-cream-deep" aria-labelledby="credentials">

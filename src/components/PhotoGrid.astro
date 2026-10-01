@@ -1,0 +1,28 @@
+---
+import type { GalleryShot } from "../data/photos";
+import Shot from "./Shot.astro";
+
+interface Props {
+  shots: GalleryShot[];
+  labelledBy: string;
+}
+
+const { shots, labelledBy } = Astro.props;
+const sizes = "(min-width: 900px) 30vw, (min-width: 640px) 46vw, 92vw";
+---
+
+<ul class:list={["photo-grid", shots.length > 3 && "photo-grid-3"]} aria-labelledby={labelledBy}>
+  {
+    shots.map((shot) => (
+      <li class="shot-frame">
+        <Shot
+          src={shot.src}
+          alt={shot.alt}
+          widths={shot.widths}
+          sizes={sizes}
+          position={shot.position}
+        />
+      </li>
+    ))
+  }
+</ul>

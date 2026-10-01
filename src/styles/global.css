@@ -35,6 +35,12 @@
     text-rendering: optimizeLegibility;
   }
 
+  @media (max-width: 767px) {
+    body {
+      padding-bottom: calc(4.5rem + env(safe-area-inset-bottom));
+    }
+  }
+
   :focus-visible {
     outline: 2px solid var(--color-forest);
     outline-offset: 3px;
@@ -50,5 +56,123 @@
 
   summary::-webkit-details-marker {
     display: none;
+  }
+}
+
+.shot-frame {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-cream-deep);
+  aspect-ratio: 3 / 2;
+}
+
+.shot-frame picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.shot-frame img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-photo .shot-frame,
+.portrait-frame {
+  aspect-ratio: 4 / 5;
+}
+
+.photo-grid {
+  display: grid;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .photo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 900px) {
+  .photo-grid-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
+
+.org-logos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.org-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 6.5rem;
+  padding: 0.85rem 0.75rem;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+}
+
+.org-logo:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+  justify-self: center;
+  width: calc(50% - 0.375rem);
+}
+
+.org-logo img {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  height: 4.25rem;
+  object-fit: contain;
+}
+
+.org-wordmark {
+  margin: 0;
+  max-width: 14ch;
+  font-family: var(--font-serif);
+  font-size: 1rem;
+  line-height: 1.25;
+  text-align: center;
+  color: var(--color-ink);
+}
+
+@media (min-width: 768px) {
+  .org-logos {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+  }
+
+  .org-logo:last-child:nth-child(odd) {
+    grid-column: auto;
+    width: auto;
+  }
+
+  .org-logo img {
+    filter: grayscale(1);
+    transition: filter 0.2s ease;
+  }
+
+  .org-logo:hover img,
+  .org-logo:focus-visible img,
+  .org-logo:focus-within img {
+    filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .org-logo img {
+    transition: none;
   }
 }
