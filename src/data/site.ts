@@ -13,9 +13,9 @@ export const site = {
   name: "LJ Auctions",
   domain: "ljauctions.com",
   url: "https://ljauctions.com",
-  positioning: "Auctioneer for estates, equipment, and personal property.",
+  positioning: "Auctioneer for benefit auctions, estates, and equipment.",
   description:
-    "LJ Auctions conducts auctions for estates, equipment, and personal property.",
+    "Luke Jaroszewski calls benefit and charity auctions, estates, and equipment. Texas Auctioneer License #18590.",
 } as const;
 
 export const contact = {
@@ -122,6 +122,70 @@ export const nonprofitWork = {
     "I've helped more than 100 nonprofits raise money, including benefit and charity auctions.",
 } as const;
 
+/** Confirmed facts only. No years-in-business, region, or client names. */
+export const confirmedStats = [
+  { label: "Started", text: "At 18" },
+  { label: "Nonprofit auctions", text: "Hundreds" },
+  { label: "Sales helped raise", text: "$3M+ gross" },
+  { label: "Nonprofits", text: "100+" },
+] as const;
+
+export const story = {
+  heading: "My story",
+  paragraphs: [
+    "I started auctioneering at 18.",
+    "I have called hundreds of auctions for nonprofits. I have helped at auctions that grossed over $3 million in sales.",
+    nonprofitWork.sentence,
+  ],
+} as const;
+
+/** Organizations Luke has auctioned for. Names only. */
+export const workedWith = [
+  "100 Club of San Antonio",
+  "Kids Feeding Kids",
+  "Kingsbury Fire Department",
+  "Marion Fire Department",
+  "Kerrville 4-H",
+] as const;
+
+/** What happens after someone asks about a date. No fees, travel area, or guarantees. */
+export const bookingSteps = [
+  {
+    title: "Check the date",
+    text: "Call or email with the date and what you want sold: a benefit auction, an estate, or equipment. I will tell you if I can take the call.",
+  },
+  {
+    title: "Write the terms",
+    text: "Payment, removal, and any buyer's premium are written down before the first bid. Nothing important is left to the chant.",
+  },
+  {
+    title: "Call the sale",
+    text: "The pace serves the room. Increments stay intelligible, and the winning bid is stated so the clerk and the bidder hear the same number.",
+  },
+] as const;
+
+export const faqs = [
+  {
+    question: "Do you call benefit and charity auctions?",
+    answer:
+      "Yes. I have helped more than 100 nonprofits raise money, including benefit and charity auctions, and I have called hundreds of auctions for nonprofits.",
+  },
+  {
+    question: "How do I check a date?",
+    answer:
+      "Call or email with the date and a short description of the sale. I will tell you if that date is open.",
+  },
+  {
+    question: "What is posted before bidding starts?",
+    answer:
+      "Payment, removal, and any buyer's premium are written down before the first bid.",
+  },
+  {
+    question: "Where are you licensed?",
+    answer: "Texas Auctioneer License #18590.",
+  },
+] as const;
+
 /** Confirmed credentials only. Null stays a placeholder — do not invent designations. */
 export const credentials = {
   designations: null as string | null,
@@ -217,13 +281,16 @@ export const approach = [
   },
 ] as const;
 
-/** Biography and credentials still to be confirmed. Rendered on the About page. */
+/**
+ * Biography and credentials still to be confirmed.
+ * A null `value` is omitted from the page. Fill `value` and the row appears.
+ */
 export const credentialTodos = [
-  { label: "Full name and role", placeholder: "[Full name and role]" },
-  { label: "Biography", placeholder: "[Short biography]" },
-  { label: "Professional designations", placeholder: "[Professional designations]" },
-  { label: "Years calling auctions", placeholder: "[Years calling auctions]" },
-  { label: "Markets served", placeholder: "[Markets served]" },
+  { label: "Full name and role", value: null as string | null, placeholder: "[Full name and role]" },
+  { label: "Biography", value: null as string | null, placeholder: "[Short biography]" },
+  { label: "Professional designations", value: null as string | null, placeholder: "[Professional designations]" },
+  { label: "Years calling auctions", value: null as string | null, placeholder: "[Years calling auctions]" },
+  { label: "Markets served", value: null as string | null, placeholder: "[Markets served]" },
 ] as const;
 
 export type Auction = {

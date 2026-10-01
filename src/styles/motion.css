@@ -480,6 +480,98 @@ footer address::after {
   }
 }
 
+/* Phone and tablet: no parallax drift. The desktop pin stays on tall, wide windows only. */
+@media (max-width: 999px) {
+  .hero-mark,
+  .hero-wash {
+    animation: none;
+    transform: none;
+  }
+}
+
+.mobile-book {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .mobile-book {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 35;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    background: var(--color-bark);
+    border-top: 1px solid rgba(243, 238, 228, 0.22);
+  }
+}
+
+.mobile-book a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 0.75rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.mobile-book a:first-child {
+  color: var(--color-cream);
+  border: 1px solid rgba(243, 238, 228, 0.55);
+}
+
+.mobile-book a:last-child {
+  background: var(--color-cream);
+  color: var(--color-forest);
+}
+
+/* Split hero: the portrait sits in the column. No giant mark behind it. */
+.hero:has(.hero-photo) {
+  min-height: 0;
+  align-items: stretch;
+}
+
+.hero:has(.hero-photo) .hero-mark {
+  display: none;
+}
+
+.hero-split {
+  display: grid;
+  gap: 1.75rem;
+  width: 100%;
+  align-items: center;
+  padding-top: 1.5rem;
+}
+
+.hero-photo {
+  order: -1;
+  width: min(100%, 22rem);
+  margin: 0;
+  justify-self: center;
+}
+
+@media (min-width: 900px) {
+  .hero:has(.hero-photo) {
+    min-height: calc(100svh - 4.75rem);
+    align-items: center;
+  }
+
+  .hero-split {
+    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 22rem);
+    gap: 2.5rem;
+  }
+
+  .hero-photo {
+    order: 0;
+    justify-self: end;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .scroll-progress,
   footer address::after {

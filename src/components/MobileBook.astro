@@ -1,0 +1,8 @@
+---
+import { contact } from "../data/site";
+---
+
+<div class="mobile-book md:hidden" aria-label="Call or check a date">
+  <a href={`tel:${contact.phoneTel}`}>Call {contact.phoneDisplay}</a>
+  <a href="/contact">Check your date</a>
+</div>
