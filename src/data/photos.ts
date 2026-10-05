@@ -17,7 +17,7 @@ export const heroPhoto = {
   src: calling,
   alt: "Luke Jaroszewski calling bids into a microphone, with notes in one hand and bidders seated behind him.",
   widths: [480, 720, 1000, 1122],
-  position: "center 30%",
+  position: "40% 25%",
 } as const;
 
 export const wavingPhoto = {
@@ -48,11 +48,11 @@ const callingShot: GalleryShot = {
   position: "center 32%",
 };
 
-const guestShot: GalleryShot = {
+export const guestShot: GalleryShot = {
   src: guest,
   alt: "Luke Jaroszewski talking with a guest beside auction tables.",
-  widths: [400, 720, 1000, 1133],
-  position: "center 35%",
+  widths: [400, 720, 900],
+  position: "center 40%",
 };
 
 /** Action photos for the home gallery. */

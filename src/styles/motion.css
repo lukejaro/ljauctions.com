@@ -168,7 +168,7 @@
   display: flex;
   align-items: flex-end;
   min-height: calc(100svh - 4.75rem);
-  overflow: clip;
+  overflow: visible;
 }
 
 .hero-wash,
@@ -180,9 +180,7 @@
 
 .hero-wash {
   inset: 0;
-  background:
-    radial-gradient(ellipse at 18% 0%, rgba(28, 59, 50, 0.72), transparent 58%),
-    radial-gradient(ellipse at 100% 100%, rgba(110, 75, 42, 0.45), transparent 46%);
+  background: #2a1e16;
 }
 
 .hero-mark {
@@ -391,7 +389,8 @@ footer address::after {
 }
 
 @media (max-width: 767px) {
-  .mobile-book {
+  body:not(:has(.hero-actions)) .mobile-book,
+  body.book-bar-on .mobile-book {
     position: fixed;
     right: 0;
     bottom: 0;
@@ -472,12 +471,16 @@ footer address::after {
     align-items: center;
   }
 
+  .hero-wash {
+    background: linear-gradient(90deg, #2a1e16 0 60%, rgba(42, 30, 22, 0) 85%);
+  }
+
   .hero-photo {
-    width: 440px;
+    width: min(452px, 100%);
     max-width: none;
     justify-self: end;
-    margin-right: 12px;
-    margin-bottom: 12px;
+    margin-right: 0;
+    margin-bottom: 0;
   }
 }
 

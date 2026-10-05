@@ -8,13 +8,13 @@ const licenseLine = texasAuctioneerLicenseLine();
 ---
 
 <footer class="on-dark mt-auto bg-bark text-cream" transition:name="site-footer" transition:animate="none">
-  <div class="wrap grid gap-12 py-16 md:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] md:items-start md:py-20">
+  <div class="wrap grid gap-12 py-14 md:grid-cols-[minmax(0,1fr)_minmax(0,24rem)] md:items-start md:py-20">
     <div class="footer-copy">
       <p class="eyebrow text-brass">Benefit auctions</p>
       <p class="mt-4 font-serif text-3xl leading-tight">{site.name}</p>
       <p class="mt-4 max-w-sm text-lg text-cream/85">{site.positioning}</p>
       <nav class="mt-8" aria-label="Footer">
-        <ul class="flex flex-wrap gap-x-5 gap-y-2">
+        <ul class="footer-nav flex flex-wrap gap-x-5">
           {
             nav.map((item) => {
               const current = isCurrentPath(pathname, item.href);
@@ -23,10 +23,7 @@ const licenseLine = texasAuctioneerLicenseLine();
                   <a
                     href={item.href}
                     aria-current={current ? "page" : undefined}
-                    class:list={[
-                      "inline-flex min-h-11 items-center text-sm font-semibold underline decoration-cream/40 underline-offset-4 hover:decoration-cream",
-                      current && "decoration-cream",
-                    ]}
+                    class="footer-nav-link"
                   >
                     {item.label}
                   </a>
@@ -40,7 +37,7 @@ const licenseLine = texasAuctioneerLicenseLine();
     <div class="footer-card">
       <h2 class="text-xs font-semibold uppercase tracking-[0.18em] text-brass">Contact</h2>
       <div class="mt-4">
-        <ContactCard tone="plain" heading="p" idPrefix="footer-" />
+        <ContactCard tone="plain" heading="p" idPrefix="footer-" omitName={true} />
       </div>
     </div>
   </div>

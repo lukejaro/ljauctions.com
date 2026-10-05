@@ -6,10 +6,14 @@ interface Props {
   heading?: "h2" | "p";
   /** Prefix field ids when more than one card is on the page. */
   idPrefix?: string;
+  /** Footer already shows the name in the card heading. */
+  omitName?: boolean;
 }
 
-const { tone = "card", heading = "p", idPrefix = "" } = Astro.props;
-const fields = contactFields().filter((field) => !field.placeholder);
+const { tone = "card", heading = "p", idPrefix = "", omitName = false } = Astro.props;
+const fields = contactFields().filter(
+  (field) => !field.placeholder && !(omitName && field.id === "name"),
+);
 const mailto = emailMailto();
 const licenseLine = texasAuctioneerLicenseLine();
 const Heading = heading;
