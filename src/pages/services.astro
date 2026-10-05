@@ -32,8 +32,11 @@ const faqSchema = {
     <h2 id="offerings" class="sr-only">Offerings</h2>
     <ol class="reveal-group">
       {
-        services.map((service) => (
-          <li class="grid gap-3 border-b border-line py-8 md:grid-cols-[16rem_1fr] md:gap-12">
+        services.map((service, index) => (
+          <li
+            id={index === 0 ? "benefit" : undefined}
+            class="grid gap-3 border-b border-line py-8 md:grid-cols-[16rem_1fr] md:gap-12"
+          >
             <h3 class="font-serif text-2xl leading-tight text-ink md:text-3xl">{service.title}</h3>
             <p class="max-w-xl text-pretty text-lg leading-relaxed text-ink-soft">{service.text}</p>
           </li>

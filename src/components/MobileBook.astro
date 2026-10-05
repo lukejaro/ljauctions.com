@@ -2,7 +2,39 @@
 import { contact } from "../data/site";
 ---
 
-<div class="mobile-book md:hidden" aria-label="Call or check a date">
+<div class="mobile-book" aria-label="Call or check a date">
   <a href={`tel:${contact.phoneTel}`}>Call {contact.phoneDisplay}</a>
   <a href="/contact">Check your date</a>
 </div>
+
+<script>
+  let bookObserver: IntersectionObserver | null = null;
+
+  function syncBookBar() {
+    bookObserver?.disconnect();
+    bookObserver = null;
+    document.body.classList.remove("book-bar-on");
+
+    const mobile = window.matchMedia("(max-width: 767px)").matches;
+    const actions = document.querySelector(".hero-actions");
+    if (!mobile || !(actions instanceof HTMLElement)) return;
+
+    bookObserver = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        if (!entry || entry.boundingClientRect.height === 0) return;
+        document.body.classList.toggle("book-bar-on", !entry.isIntersecting);
+      },
+      { threshold: 0 },
+    );
+    bookObserver.observe(actions);
+  }
+
+  syncBookBar();
+  document.addEventListener("astro:page-load", syncBookBar);
+  document.addEventListener("astro:before-swap", () => {
+    bookObserver?.disconnect();
+    bookObserver = null;
+    document.body.classList.remove("book-bar-on");
+  });
+</script>
