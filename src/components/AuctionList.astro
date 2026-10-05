@@ -16,15 +16,10 @@ const Title = titleLevel;
 
 {
   auctions.length === 0 ? (
-    <div class="wipe border border-line bg-paper px-6 py-12 text-center">
-      <Heading class="font-serif text-3xl text-ink">{emptyTitle}</Heading>
-      <p class="mx-auto mt-3 max-w-md text-pretty text-ink-soft">{emptyText}</p>
-      <a
-        href="/contact"
-        class="mt-6 inline-flex min-h-11 items-center justify-center bg-forest px-5 text-sm font-semibold text-cream hover:bg-forest-deep"
-      >
-        Ask about a sale
-      </a>
+    <div class="wipe panel px-6 py-14 text-center md:px-10">
+      <Heading class="font-serif text-3xl text-ink md:text-4xl">{emptyTitle}</Heading>
+      <p class="mx-auto mt-4 max-w-md text-pretty text-lg text-ink-soft">{emptyText}</p>
+      <a href="/contact" class="btn btn-primary mt-8">Check your date</a>
     </div>
   ) : (
     <ol class="divide-y divide-line border-y border-line">

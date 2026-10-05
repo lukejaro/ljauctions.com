@@ -1,63 +1,100 @@
 ---
+import OrgLogos from "../components/OrgLogos.astro";
 import PageIntro from "../components/PageIntro.astro";
-import Placeholder from "../components/Placeholder.astro";
+import PhotoGrid from "../components/PhotoGrid.astro";
+import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { approach, credentialTodos, nonprofitWork, site, texasAuctioneerLicenseLine } from "../data/site";
+import { aboutShots, portraitPhoto } from "../data/photos";
+import { approach, credentialTodos, story, texasAuctioneerLicenseLine } from "../data/site";
+
+const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim());
 ---
 
 <BaseLayout
   title="About"
-  description="How LJ Auctions prepares a sale and conducts the call. Biography and credentials are still to be confirmed."
+  description="Luke Jaroszewski calls benefit and charity auctions. He started auctioneering at 18 and has called hundreds of auctions for nonprofits. Texas Auctioneer License #18590."
 >
   <PageIntro
-    eyebrow="About"
-    title="A measured call, and terms you can read."
-    lede={`${site.name} conducts live auctions. The work is the property, the written terms, and a call the room can follow.`}
+    eyebrow="Benefit auctions"
+    title="I call benefit auctions."
+    lede="I started auctioneering at 18. I have called hundreds of auctions for nonprofits, and I have helped at auctions that grossed over $3 million in sales. Estates and equipment are part of the work, too."
   />
 
-  <section class="mx-auto max-w-5xl px-6 py-16" aria-labelledby="approach">
-    <h2 id="approach" class="reveal font-serif text-3xl text-ink">How a sale is run</h2>
-    <ol class="reveal-group mt-8 grid gap-6 md:grid-cols-3">
+  <section class="wrap py-20 md:py-28" aria-labelledby="my-story">
+    <div class="grid items-start gap-10 md:grid-cols-[minmax(14rem,18rem)_minmax(0,1fr)]">
+      <figure class="shot-frame portrait-frame mx-auto w-full max-w-xs">
+        <Shot
+          src={portraitPhoto.src}
+          alt={portraitPhoto.alt}
+          widths={[...portraitPhoto.widths]}
+          sizes="(min-width: 768px) 18rem, min(20rem, calc(100vw - 3rem))"
+          position={portraitPhoto.position}
+        />
+      </figure>
+      <div>
+        <p class="reveal eyebrow text-wood">My story</p>
+        <h2 id="my-story" class="reveal display-sm mt-4 text-ink">{story.heading}</h2>
+        <div class="mt-6 max-w-2xl space-y-4 text-lg text-pretty leading-relaxed text-ink">
+          {story.paragraphs.map((paragraph) => <p class="reveal">{paragraph}</p>)}
+        </div>
+        {
+          texasAuctioneerLicenseLine() && (
+            <p class="reveal mt-6 text-sm font-semibold tracking-wide text-ink">{texasAuctioneerLicenseLine()}</p>
+          )
+        }
+      </div>
+    </div>
+  </section>
+
+  <OrgLogos />
+
+  <section class="wrap py-20 md:py-24" aria-labelledby="photos">
+    <p class="reveal eyebrow text-wood">The call</p>
+    <h2 id="photos" class="reveal display-sm mt-4 text-ink">At a sale</h2>
+    <div class="mt-10">
+      <PhotoGrid shots={aboutShots} labelledBy="photos" />
+    </div>
+  </section>
+
+  <section class="border-t border-line bg-cream-deep" aria-labelledby="approach">
+    <div class="wrap py-20 md:py-24">
+    <h2 id="approach" class="reveal display-sm text-ink">How a sale is run</h2>
+    <ol class="reveal-group mt-10 grid gap-4 md:grid-cols-3">
       {
         approach.map((step, index) => (
-          <li class="border-t-2 border-forest bg-paper px-5 py-6">
-            <p class="font-serif text-sm text-wood">{String(index + 1).padStart(2, "0")}</p>
-            <h3 class="mt-3 font-serif text-xl leading-tight text-ink">{step.title}</h3>
-            <p class="mt-3 text-pretty text-ink-soft">{step.text}</p>
+          <li class="panel">
+            <p class="font-serif text-3xl leading-none text-wood">{String(index + 1).padStart(2, "0")}</p>
+            <h3 class="mt-4 font-serif text-2xl leading-tight text-ink">{step.title}</h3>
+            <p class="mt-3 text-pretty leading-relaxed text-ink-soft">{step.text}</p>
           </li>
         ))
       }
     </ol>
-    <p class="reveal mt-10 max-w-2xl text-pretty text-lg text-ink">{nonprofitWork.sentence}</p>
+    </div>
   </section>
 
-  <section class="reveal border-t border-line bg-cream-deep" aria-labelledby="credentials">
-    <div class="mx-auto max-w-5xl px-6 py-16">
-      <h2 id="credentials" class="font-serif text-3xl text-ink">Biography and credentials</h2>
-      <p class="mt-4 max-w-2xl text-pretty text-ink-soft">
-        The license number is confirmed. The other lines stay blank until they are confirmed.
-        Nothing else here is a claimed designation or year count.
-      </p>
+  <section class="reveal on-dark bg-bark text-cream" aria-labelledby="credentials">
+    <div class="wrap py-14 md:py-16">
+      <h2 id="credentials" class="font-serif text-3xl">
+        {confirmedCredentials.length > 0 ? "Biography and credentials" : "License"}
+      </h2>
       {
         texasAuctioneerLicenseLine() && (
-          <p class="mt-6 text-sm font-semibold tracking-wide text-ink">{texasAuctioneerLicenseLine()}</p>
+            <p class="mt-4 text-lg text-cream/90">{texasAuctioneerLicenseLine()}</p>
         )
       }
-      <ul class="mt-8 max-w-2xl divide-y divide-line border-y border-line">
-        {
-          credentialTodos.map((item) => (
-            <li class="grid gap-2 py-4 sm:grid-cols-[14rem_1fr] sm:items-baseline">
-              <p class="text-sm font-semibold text-ink">
-                <span class="mr-2 text-xs font-semibold uppercase tracking-[0.14em] text-forest">TODO</span>
-                {item.label}
-              </p>
-              <p>
-                <Placeholder value={item.placeholder} />
-              </p>
-            </li>
-          ))
-        }
-      </ul>
+      {
+        confirmedCredentials.length > 0 && (
+          <ul class="mt-8 max-w-2xl divide-y divide-cream/20 border-y border-cream/20">
+            {confirmedCredentials.map((item) => (
+              <li class="grid gap-2 py-4 sm:grid-cols-[14rem_1fr] sm:items-baseline">
+                <p class="text-sm font-semibold text-brass">{item.label}</p>
+                <p class="text-cream">{item.value}</p>
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </div>
   </section>
 </BaseLayout>

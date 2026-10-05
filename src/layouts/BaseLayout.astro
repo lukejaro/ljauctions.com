@@ -7,6 +7,7 @@ import "../styles/global.css";
 import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import MobileBook from "../components/MobileBook.astro";
 import { contact, site } from "../data/site";
 
 const pageRise = {
@@ -33,9 +34,11 @@ const pageRise = {
 interface Props {
   title: string;
   description: string;
+  /** Extra JSON-LD object, such as an FAQPage. */
+  extraStructuredData?: Record<string, unknown>;
 }
 
-const { title, description } = Astro.props;
+const { title, description, extraStructuredData } = Astro.props;
 const pageTitle = title === site.name ? site.name : `${title} · ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
 
@@ -71,6 +74,11 @@ if (contact.serviceArea) structuredData.areaServed = contact.serviceArea;
     <meta name="twitter:description" content={description} />
     <title>{pageTitle}</title>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    {
+      extraStructuredData && (
+        <script type="application/ld+json" set:html={JSON.stringify(extraStructuredData)} />
+      )
+    }
   </head>
   <body class="flex min-h-screen flex-col">
     <a
@@ -85,5 +93,6 @@ if (contact.serviceArea) structuredData.areaServed = contact.serviceArea;
       <slot />
     </main>
     <Footer />
+    <MobileBook />
   </body>
 </html>

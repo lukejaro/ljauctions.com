@@ -1,42 +1,64 @@
 ---
 import PageIntro from "../components/PageIntro.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { services } from "../data/site";
+import { faqs, services } from "../data/site";
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: faqs.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
 ---
 
 <BaseLayout
   title="Services"
-  description="LJ Auctions calls auctions and prepares estate, equipment, and business property for public sale."
+  description="LJ Auctions calls benefit and charity auctions, estates, and equipment. Texas Auctioneer License #18590."
+  extraStructuredData={faqSchema}
 >
   <PageIntro
     eyebrow="Services"
-    title="What LJ Auctions sells and calls."
-    lede="Live auctioneering, and the preparation that makes a sale bill worth reading. Categories below are the working list for the site."
+    title="Benefit auctions, estates, and equipment."
+    lede="Live bid calling for charity and nonprofit sales, then estates, equipment, and business dispersals."
   />
 
-  <section class="mx-auto max-w-5xl px-6 py-16" aria-labelledby="offerings">
+  <section class="wrap py-16 md:py-24" aria-labelledby="offerings">
     <h2 id="offerings" class="sr-only">Offerings</h2>
-    <ol class="reveal-group divide-y divide-line border-y border-line">
+    <ol class="reveal-group">
       {
         services.map((service) => (
-          <li class="grid gap-3 py-8 md:grid-cols-[16rem_1fr] md:gap-10">
-            <h3 class="font-serif text-2xl leading-tight text-ink">{service.title}</h3>
-            <p class="max-w-xl text-pretty text-ink-soft">{service.text}</p>
+          <li class="grid gap-3 border-b border-line py-8 md:grid-cols-[16rem_1fr] md:gap-12">
+            <h3 class="font-serif text-2xl leading-tight text-ink md:text-3xl">{service.title}</h3>
+            <p class="max-w-xl text-pretty text-lg leading-relaxed text-ink-soft">{service.text}</p>
           </li>
         ))
       }
     </ol>
-    <p class="reveal mt-8 max-w-2xl text-sm text-ink-soft">
-      <strong class="font-semibold uppercase tracking-[0.14em] text-forest">TODO:</strong>
-      Confirm which sale types and advertising channels should be listed before launch.
+    <p class="mt-10">
+      <a href="/contact" class="btn btn-primary">Check your date</a>
     </p>
-    <p class="mt-8">
-      <a
-        href="/contact"
-        class="inline-flex min-h-11 items-center justify-center bg-forest px-5 text-sm font-semibold text-cream hover:bg-forest-deep"
-      >
-        Discuss a sale
-      </a>
-    </p>
+  </section>
+
+  <section class="border-t border-line bg-cream-deep" aria-labelledby="faq">
+    <div class="wrap py-20 md:py-24">
+      <p class="reveal eyebrow text-wood">Questions</p>
+      <h2 id="faq" class="reveal display-sm mt-4 text-ink">Before you book</h2>
+      <dl class="mt-10 max-w-3xl">
+        {
+          faqs.map((item) => (
+            <div class="reveal border-t border-line py-7">
+              <dt class="font-serif text-2xl leading-tight text-ink">{item.question}</dt>
+              <dd class="mt-3 max-w-2xl text-pretty text-lg leading-relaxed text-ink-soft">{item.answer}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </div>
   </section>
 </BaseLayout>

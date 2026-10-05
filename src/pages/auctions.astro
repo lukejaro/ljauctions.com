@@ -14,10 +14,10 @@ const sales = upcomingFrom(upcomingAuctions);
   <PageIntro
     eyebrow="Calendar"
     title="Upcoming auctions"
-    lede="Sale dates, locations, and a short description are listed here when a sale is set."
+    lede="Benefit auctions lead the calendar. Estate and equipment dates are listed here too, once a sale is set."
   />
 
-  <section class="mx-auto max-w-5xl px-6 py-16" aria-label="Scheduled sales">
+  <section class="wrap py-16 md:py-24" aria-label="Scheduled sales">
     <AuctionList
       auctions={sales}
       emptyTitle="None scheduled"

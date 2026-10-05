@@ -1,0 +1,40 @@
+---
+import club from "../assets/logos/org-100-club-sa.png";
+import kids from "../assets/logos/org-kids-feeding-kids.png";
+import { workedWith } from "../data/site";
+import type { ImageMetadata } from "astro";
+
+const logos: Record<string, ImageMetadata> = {
+  "100 Club of San Antonio": club,
+  "Kids Feeding Kids": kids,
+};
+---
+
+<section class="border-y border-line bg-paper" aria-labelledby="worked-with">
+  <div class="wrap py-16 md:py-20">
+    <h2 id="worked-with" class="reveal font-serif text-3xl text-ink md:text-4xl">Nonprofits I've worked with.</h2>
+    <ul class="org-logos mt-10">
+      {
+        workedWith.map((name) => {
+          const logo = logos[name];
+          return (
+            <li class="org-logo" tabindex="0">
+              {logo ? (
+                <img
+                  src={logo.src}
+                  alt={name}
+                  width={logo.width}
+                  height={logo.height}
+                  loading="lazy"
+                  decoding="async"
+                />
+              ) : (
+                <p class="org-wordmark">{name}</p>
+              )}
+            </li>
+          );
+        })
+      }
+    </ul>
+  </div>
+</section>
