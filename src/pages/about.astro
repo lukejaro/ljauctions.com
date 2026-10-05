@@ -1,4 +1,5 @@
 ---
+import BookingBand from "../components/BookingBand.astro";
 import OrgLogos from "../components/OrgLogos.astro";
 import PageIntro from "../components/PageIntro.astro";
 import PhotoGrid from "../components/PhotoGrid.astro";
@@ -20,7 +21,8 @@ const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim()
     lede="I started auctioneering at 18. I have called hundreds of auctions for nonprofits, and I have helped at auctions that grossed over $3 million in sales. Estates and equipment are part of the work, too."
   />
 
-  <section class="wrap py-20 md:py-28" aria-labelledby="my-story">
+  <section class="bg-cream" aria-labelledby="my-story">
+    <div class="wrap py-14 md:py-20">
     <div class="grid items-start gap-10 md:grid-cols-[minmax(14rem,18rem)_minmax(0,1fr)]">
       <figure class="shot-frame portrait-frame mx-auto w-full max-w-xs">
         <Shot
@@ -32,7 +34,7 @@ const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim()
         />
       </figure>
       <div>
-        <p class="reveal eyebrow text-wood">My story</p>
+        <p class="reveal eyebrow text-forest">My story</p>
         <h2 id="my-story" class="reveal display-sm mt-4 text-ink">{story.heading}</h2>
         <div class="mt-6 max-w-2xl space-y-4 text-lg text-pretty leading-relaxed text-ink">
           {story.paragraphs.map((paragraph) => <p class="reveal">{paragraph}</p>)}
@@ -44,20 +46,23 @@ const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim()
         }
       </div>
     </div>
+    </div>
   </section>
 
   <OrgLogos />
 
-  <section class="wrap py-20 md:py-24" aria-labelledby="photos">
+  <section class="bg-cream" aria-labelledby="photos">
+    <div class="wrap py-14 md:py-20">
     <p class="reveal eyebrow text-forest">The call</p>
     <h2 id="photos" class="reveal display-sm mt-4 text-ink">At a sale</h2>
     <div class="mt-10">
       <PhotoGrid shots={aboutShots} labelledBy="photos" />
     </div>
+    </div>
   </section>
 
-  <section class="border-t border-line bg-cream-deep" aria-labelledby="approach">
-    <div class="wrap py-20 md:py-24">
+  <section class="bg-cream-deep" aria-labelledby="approach">
+    <div class="wrap py-14 md:py-20">
     <h2 id="approach" class="reveal display-sm text-ink">How a sale is run</h2>
     <ol class="reveal-group mt-10 grid gap-4 md:grid-cols-3">
       {
@@ -74,7 +79,7 @@ const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim()
   </section>
 
   <section class="reveal on-dark bg-bark text-cream" aria-labelledby="credentials">
-    <div class="wrap py-14 md:py-16">
+    <div class="wrap py-14 md:py-20">
       <h2 id="credentials" class="font-serif text-3xl">
         {confirmedCredentials.length > 0 ? "Biography and credentials" : "License"}
       </h2>
@@ -97,4 +102,6 @@ const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim()
       }
     </div>
   </section>
+
+  <BookingBand id="about-booking" />
 </BaseLayout>

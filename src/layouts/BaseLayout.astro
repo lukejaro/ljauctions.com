@@ -94,5 +94,27 @@ if (contact.serviceArea) structuredData.areaServed = contact.serviceArea;
     </main>
     <Footer />
     <MobileBook />
+    <script>
+      function showShot(img: HTMLImageElement) {
+        if (img.naturalWidth > 0) img.classList.add("is-loaded");
+      }
+
+      function bindShots() {
+        document.querySelectorAll<HTMLImageElement>(".shot-frame img").forEach((img) => {
+          showShot(img);
+        });
+      }
+
+      document.addEventListener(
+        "load",
+        (event) => {
+          const target = event.target;
+          if (target instanceof HTMLImageElement && target.closest(".shot-frame")) showShot(target);
+        },
+        true,
+      );
+      bindShots();
+      document.addEventListener("astro:page-load", bindShots);
+    </script>
   </body>
 </html>

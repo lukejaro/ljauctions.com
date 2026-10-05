@@ -1,19 +1,23 @@
 ---
+import BookingBand from "../components/BookingBand.astro";
 import OrgLogos from "../components/OrgLogos.astro";
 import PhotoGrid from "../components/PhotoGrid.astro";
 import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { guestShot, heroPhoto, homeShots } from "../data/photos";
+import { heroPhoto, homeShots, stageShot } from "../data/photos";
 import {
   auctionCategories,
   bookingSteps,
   confirmedStats,
   contact,
+  services,
   site,
   story,
   upcomingAuctions,
   upcomingFrom,
 } from "../data/site";
+
+const benefitCall = services[1].text.slice(services[1].text.indexOf("Increments"));
 
 const sales = upcomingFrom(upcomingAuctions);
 const nextSale = sales.slice(0, 1);
@@ -40,6 +44,7 @@ const nextSale = sales.slice(0, 1);
             widths={[...heroPhoto.widths]}
             sizes="(min-width: 900px) 440px, min(100vw, 28rem)"
             position={heroPhoto.position}
+            formats={["webp", "jpeg"]}
             eager={true}
           />
         </div>
@@ -87,11 +92,11 @@ const nextSale = sales.slice(0, 1);
       </div>
       <figure class="story-photo shot-frame">
         <Shot
-          src={guestShot.src}
-          alt={guestShot.alt}
-          widths={[...guestShot.widths]}
+          src={stageShot.src}
+          alt={stageShot.alt}
+          widths={[...stageShot.widths]}
           sizes="(min-width: 900px) 36vw, min(100vw, 28rem)"
-          position={guestShot.position}
+          position={stageShot.position}
         />
       </figure>
     </div>
@@ -107,23 +112,29 @@ const nextSale = sales.slice(0, 1);
         {
           auctionCategories.map((category, index) => {
             const feature = index === 0;
-            const body = (
-              <>
-                <p class="work-num" aria-hidden="true">
-                  {String(index + 1).padStart(2, "0")}
-                </p>
-                <h3 class="mt-4 font-serif text-2xl leading-tight">{category.title}</h3>
-                <p class="work-copy mt-3 text-pretty">{category.text}</p>
-              </>
-            );
             return (
               <li class:list={["work-card", feature && "work-card-feature"]}>
                 {feature ? (
-                  <a class="work-card-link" href="/services#benefit">
-                    {body}
-                  </a>
+                  <div class="feature-split">
+                    <div>
+                      <p class="work-num" aria-hidden="true">01</p>
+                      <h3 class="mt-4 font-serif leading-tight">{category.title}</h3>
+                      <p class="work-copy mt-3 text-pretty">{category.text}</p>
+                    </div>
+                    <div class="feature-side">
+                      <p>Live bid calling for charity and nonprofit sales</p>
+                      <p>{benefitCall}</p>
+                      <a href="/contact" class="btn-check">Check your date</a>
+                    </div>
+                  </div>
                 ) : (
-                  body
+                  <>
+                    <p class="work-num" aria-hidden="true">
+                      {String(index + 1).padStart(2, "0")}
+                    </p>
+                    <h3 class="mt-4 font-serif leading-tight">{category.title}</h3>
+                    <p class="work-copy mt-3 text-pretty">{category.text}</p>
+                  </>
                 )}
               </li>
             );
@@ -137,13 +148,13 @@ const nextSale = sales.slice(0, 1);
     <div class="wrap py-14 md:py-20">
       <p class="reveal eyebrow text-forest">Booking</p>
       <h2 id="how-booking" class="reveal mt-3 font-serif text-3xl text-ink md:text-4xl">How a date gets on the book</h2>
-      <ol class="reveal-group mt-8 grid gap-4 md:grid-cols-3">
+      <ol class="reveal-group booking-steps mt-8">
         {
           bookingSteps.map((step, index) => (
             <li class="work-card">
               <p class="work-num">{String(index + 1).padStart(2, "0")}</p>
-              <h3 class="mt-4 font-serif text-xl leading-tight text-ink">{step.title}</h3>
-              <p class="mt-3 text-pretty text-ink-soft">{step.text}</p>
+              <h3 class="mt-4 font-serif leading-tight text-ink">{step.title}</h3>
+              <p class="work-copy mt-3 text-pretty">{step.text}</p>
             </li>
           ))
         }
@@ -163,16 +174,7 @@ const nextSale = sales.slice(0, 1);
 
   {
     sales.length === 0 ? (
-      <section class="next-band" aria-labelledby="next-sale">
-        <div class="wrap next-band-inner">
-          <h2 id="next-sale" class="next-band-title">
-            Now booking. Check your date.
-          </h2>
-          <a href="/contact" class="btn-check">
-            Check your date
-          </a>
-        </div>
-      </section>
+      <BookingBand />
     ) : (
       <section class="border-t border-line" aria-labelledby="next-sale">
         <div class="wrap py-16">
