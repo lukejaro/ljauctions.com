@@ -12,12 +12,12 @@ export interface GalleryShot {
   position: string;
 }
 
-/** Home hero. Action on the stand; no event or venue in the alt text. */
+/** Home hero. Tight on the face; the soft table sits below the frame. */
 export const heroPhoto = {
   src: calling,
   alt: "Luke Jaroszewski calling bids into a microphone, with notes in one hand and bidders seated behind him.",
-  widths: [440, 720, 880, 1088],
-  position: "40% 25%",
+  widths: [190, 380],
+  position: "50% 18%",
 } as const;
 
 export const wavingPhoto = {
@@ -30,22 +30,22 @@ export const wavingPhoto = {
 export const portraitPhoto = {
   src: portrait,
   alt: "Luke Jaroszewski in profile, holding a microphone, wearing a navy blazer.",
-  widths: [480, 720, 935],
-  position: "18% 22%",
+  widths: [400, 700],
+  position: "center 30%",
 } as const;
 
 export const stageShot: GalleryShot = {
   src: stage,
   alt: "Luke Jaroszewski on stage with both arms raised while calling a sale.",
-  widths: [400, 720, 1000, 1097],
-  position: "center 30%",
+  widths: [420],
+  position: "50% 70%",
 };
 
 const callingShot: GalleryShot = {
   src: calling,
-  alt: "Luke Jaroszewski calling bids into a microphone, with notes in one hand and bidders seated behind him.",
-  widths: [400, 720, 880, 1088],
-  position: "center 32%",
+  alt: heroPhoto.alt,
+  widths: [190, 380],
+  position: "50% 18%",
 };
 
 export const guestShot: GalleryShot = {
@@ -58,7 +58,7 @@ export const guestShot: GalleryShot = {
 const portraitShot: GalleryShot = {
   src: portrait,
   alt: portraitPhoto.alt,
-  widths: [400, 720, 935],
+  widths: [400, 700],
   position: portraitPhoto.position,
 };
 
@@ -68,7 +68,10 @@ const portraitShot: GalleryShot = {
  */
 export const homeShots: GalleryShot[] = [guestShot, portraitShot];
 
-/** Every photo, for the About gallery. */
+/**
+ * About gallery: photos not already used on this page.
+ * The story portrait stays out. Four images sit in a 2×2 at 3:2.
+ */
 export const aboutShots: GalleryShot[] = [
   {
     src: waving,
@@ -76,13 +79,7 @@ export const aboutShots: GalleryShot[] = [
     widths: [400, 720, 1000, 1063],
     position: "72% 14%",
   },
-  {
-    src: portrait,
-    alt: portraitPhoto.alt,
-    widths: [400, 720, 935],
-    position: "18% 22%",
-  },
-  { ...stageShot, position: "18% 30%" },
   callingShot,
   guestShot,
+  { ...stageShot, position: "center 72%" },
 ];

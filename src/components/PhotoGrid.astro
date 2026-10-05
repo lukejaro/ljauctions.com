@@ -11,7 +11,14 @@ const { shots, labelledBy } = Astro.props;
 const sizes = "(min-width: 900px) 30vw, (min-width: 640px) 46vw, 92vw";
 ---
 
-<ul class:list={["photo-grid", shots.length === 2 && "photo-grid-2"]} aria-labelledby={labelledBy}>
+<ul
+  class:list={[
+    "photo-grid",
+    shots.length === 2 && "photo-grid-2",
+    shots.length === 4 && "photo-grid-4",
+  ]}
+  aria-labelledby={labelledBy}
+>
   {
     shots.map((shot) => (
       <li class="shot-frame">

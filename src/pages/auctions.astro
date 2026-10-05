@@ -3,7 +3,7 @@ import AuctionList from "../components/AuctionList.astro";
 import BookingBand from "../components/BookingBand.astro";
 import PageIntro from "../components/PageIntro.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { upcomingAuctions, upcomingFrom } from "../data/site";
+import { contact, upcomingAuctions, upcomingFrom } from "../data/site";
 
 const sales = upcomingFrom(upcomingAuctions);
 ---
@@ -20,11 +20,17 @@ const sales = upcomingFrom(upcomingAuctions);
 
   {
     sales.length === 0 ? (
-      <section class="bg-cream" aria-label="Scheduled sales">
-        <div class="wrap py-14 md:py-20">
-          <p class="max-w-xl font-serif text-2xl leading-snug text-ink">
-            No public sales are scheduled right now.
-          </p>
+      <section class="empty-sale" aria-label="Scheduled sales">
+        <div class="empty-sale-card">
+          <svg class="empty-sale-icon" viewBox="0 0 32 32" width="32" height="32" aria-hidden="true">
+            <rect x="4.5" y="7" width="23" height="20.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.75"></rect>
+            <path d="M4.5 13.5h23M11 4.5v5M21 4.5v5" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"></path>
+          </svg>
+          <p class="empty-sale-line">No public sales are scheduled right now.</p>
+          <div class="empty-sale-actions">
+            <a class="btn btn-primary" href="/contact">Check your date</a>
+            <a class="btn btn-line-ink" href={`tel:${contact.phoneTel}`}>Call {contact.phoneDisplay}</a>
+          </div>
         </div>
       </section>
     ) : (

@@ -6,9 +6,7 @@ import PhotoGrid from "../components/PhotoGrid.astro";
 import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { aboutShots, portraitPhoto } from "../data/photos";
-import { approach, credentialTodos, story, texasAuctioneerLicenseLine } from "../data/site";
-
-const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim());
+import { approach, story, texasAuctioneerLicenseLine } from "../data/site";
 ---
 
 <BaseLayout
@@ -64,42 +62,17 @@ const confirmedCredentials = credentialTodos.filter((item) => item.value?.trim()
   <section class="bg-cream-deep" aria-labelledby="approach">
     <div class="wrap py-14 md:py-20">
     <h2 id="approach" class="reveal display-sm text-ink">How a sale is run</h2>
-    <ol class="reveal-group mt-10 grid gap-4 md:grid-cols-3">
+    <ol class="approach-steps mt-10">
       {
         approach.map((step, index) => (
-          <li class="panel">
-            <p class="font-serif text-3xl leading-none text-wood">{String(index + 1).padStart(2, "0")}</p>
-            <h3 class="mt-4 font-serif text-2xl leading-tight text-ink">{step.title}</h3>
-            <p class="mt-3 text-pretty leading-relaxed text-ink-soft">{step.text}</p>
+          <li class="work-card">
+            <p class="approach-num">{String(index + 1).padStart(2, "0")}</p>
+            <h3 class="mt-4 font-serif leading-tight text-ink">{step.title}</h3>
+            <p class="work-copy mt-3 text-pretty">{step.text}</p>
           </li>
         ))
       }
     </ol>
-    </div>
-  </section>
-
-  <section class="reveal on-dark bg-bark text-cream" aria-labelledby="credentials">
-    <div class="wrap py-14 md:py-20">
-      <h2 id="credentials" class="font-serif text-3xl">
-        {confirmedCredentials.length > 0 ? "Biography and credentials" : "License"}
-      </h2>
-      {
-        texasAuctioneerLicenseLine() && (
-            <p class="mt-4 text-lg text-cream/90">{texasAuctioneerLicenseLine()}</p>
-        )
-      }
-      {
-        confirmedCredentials.length > 0 && (
-          <ul class="mt-8 max-w-2xl divide-y divide-cream/20 border-y border-cream/20">
-            {confirmedCredentials.map((item) => (
-              <li class="grid gap-2 py-4 sm:grid-cols-[14rem_1fr] sm:items-baseline">
-                <p class="text-sm font-semibold text-brass">{item.label}</p>
-                <p class="text-cream">{item.value}</p>
-              </li>
-            ))}
-          </ul>
-        )
-      }
     </div>
   </section>
 
