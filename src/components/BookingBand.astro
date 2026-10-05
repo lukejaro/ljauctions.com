@@ -1,0 +1,14 @@
+---
+interface Props {
+  id?: string;
+}
+
+const { id = "next-sale" } = Astro.props;
+---
+
+<section class="next-band" aria-labelledby={id}>
+  <div class="wrap next-band-inner">
+    <h2 id={id} class="next-band-title">Now booking. Check your date.</h2>
+    <a href="/contact" class="btn-check">Check your date</a>
+  </div>
+</section>

@@ -28,40 +28,47 @@ const faqSchema = {
     lede="Live bid calling for charity and nonprofit sales, then estates, equipment, and business dispersals."
   />
 
-  <section class="wrap py-16 md:py-24" aria-labelledby="offerings">
+  <section aria-labelledby="offerings">
     <h2 id="offerings" class="sr-only">Offerings</h2>
-    <ol class="reveal-group">
+    <ol class="service-list">
       {
-        services.map((service, index) => (
-          <li
-            id={index === 0 ? "benefit" : undefined}
-            class="grid gap-3 border-b border-line py-8 md:grid-cols-[16rem_1fr] md:gap-12"
-          >
-            <h3 class="font-serif text-2xl leading-tight text-ink md:text-3xl">{service.title}</h3>
-            <p class="max-w-xl text-pretty text-lg leading-relaxed text-ink-soft">{service.text}</p>
-          </li>
-        ))
+        services.map((service, index) => {
+          const feature = index === 0;
+          return (
+            <li id={feature ? "benefit" : undefined} class:list={["service-row", feature && "service-row-feature"]}>
+              <div class="service-row-inner">
+                <div>
+                  {feature && <p class="service-kicker">PRIMARY</p>}
+                  <h3 class="font-serif leading-tight">{service.title}</h3>
+                </div>
+                <p class="service-desc">{service.text}</p>
+              </div>
+            </li>
+          );
+        })
       }
     </ol>
-    <p class="mt-10">
+    <p class="wrap service-cta">
       <a href="/contact" class="btn btn-primary">Check your date</a>
     </p>
   </section>
 
-  <section class="border-t border-line bg-cream-deep" aria-labelledby="faq">
-    <div class="wrap py-20 md:py-24">
-      <p class="reveal eyebrow text-wood">Questions</p>
-      <h2 id="faq" class="reveal display-sm mt-4 text-ink">Before you book</h2>
-      <dl class="mt-10 max-w-3xl">
+  <section class="bg-cream-deep" aria-labelledby="faq">
+    <div class="faq-layout wrap py-14 md:py-20">
+      <div class="faq-intro">
+        <p class="eyebrow text-forest">Questions</p>
+        <h2 id="faq" class="mt-3 font-serif text-3xl text-ink md:text-4xl">Before you book</h2>
+      </div>
+      <div class="faq-list">
         {
-          faqs.map((item) => (
-            <div class="reveal border-t border-line py-7">
-              <dt class="font-serif text-2xl leading-tight text-ink">{item.question}</dt>
-              <dd class="mt-3 max-w-2xl text-pretty text-lg leading-relaxed text-ink-soft">{item.answer}</dd>
-            </div>
+          faqs.map((item, index) => (
+            <details class="faq-item" open={index === 0}>
+              <summary class="faq-summary">{item.question}</summary>
+              <p class="faq-answer">{item.answer}</p>
+            </details>
           ))
         }
-      </dl>
+      </div>
     </div>
   </section>
 </BaseLayout>

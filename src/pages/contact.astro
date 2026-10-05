@@ -1,7 +1,10 @@
 ---
-import ContactCard from "../components/ContactCard.astro";
 import PageIntro from "../components/PageIntro.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { contact, emailMailto, faqs, texasAuctioneerLicenseLine, vcardFile } from "../data/site";
+
+const licenseLine = texasAuctioneerLicenseLine();
+const dateAnswer = faqs[1].answer;
 ---
 
 <BaseLayout
@@ -14,8 +17,27 @@ import BaseLayout from "../layouts/BaseLayout.astro";
     lede="For a benefit auction first, or for an estate or equipment sale. Call, email, or add Luke Jaroszewski to your phone."
   />
 
-  <section class="reveal mx-auto w-full max-w-2xl px-6 py-16 md:py-24" aria-labelledby="contact-card-heading">
-    <h2 id="contact-card-heading" class="sr-only">Business contact card</h2>
-    <ContactCard />
+  <section class="bg-cream" aria-labelledby="what-to-send">
+    <div class="contact-split wrap py-14 md:py-20">
+      <div class="contact-actions">
+        <a class="contact-action contact-action-fill" href={`tel:${contact.phoneTel}`}>
+          Call {contact.phoneDisplay}
+        </a>
+        <a class="contact-action contact-action-line" href={emailMailto()}>Email</a>
+        <a
+          class="contact-action contact-action-line"
+          href={vcardFile.href}
+          download={vcardFile.filename}
+          type="text/vcard"
+        >
+          Add to contacts
+        </a>
+      </div>
+      <aside class="contact-panel">
+        <h2 id="what-to-send" class="font-serif text-2xl text-ink">What to send</h2>
+        <p class="mt-4 text-pretty text-ink">{dateAnswer}</p>
+        {licenseLine && <p class="mt-4 text-sm font-semibold tracking-wide text-ink">{licenseLine}</p>}
+      </aside>
+    </div>
   </section>
 </BaseLayout>

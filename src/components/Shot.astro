@@ -9,18 +9,22 @@ interface Props {
   sizes: string;
   position: string;
   eager?: boolean;
+  formats?: ("avif" | "webp" | "jpeg" | "jpg" | "png")[];
 }
 
-const { src, alt, widths, sizes, position, eager = false } = Astro.props;
+const { src, alt, widths, sizes, position, eager = false, formats = ["avif", "webp"] } = Astro.props;
 ---
 
 <Picture
   src={src}
-  formats={["avif", "webp"]}
+  formats={formats}
   widths={widths}
   sizes={sizes}
+  width={src.width}
+  height={src.height}
   alt={alt}
   loading={eager ? "eager" : "lazy"}
+  decoding={eager ? "sync" : "async"}
   fetchpriority={eager ? "high" : "auto"}
   class="shot"
   style={`object-position: ${position}`}

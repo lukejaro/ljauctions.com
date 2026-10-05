@@ -16,7 +16,7 @@ export interface GalleryShot {
 export const heroPhoto = {
   src: calling,
   alt: "Luke Jaroszewski calling bids into a microphone, with notes in one hand and bidders seated behind him.",
-  widths: [480, 720, 1000, 1122],
+  widths: [440, 720, 880, 1088],
   position: "40% 25%",
 } as const;
 
@@ -34,17 +34,17 @@ export const portraitPhoto = {
   position: "18% 22%",
 } as const;
 
-const stageShot: GalleryShot = {
+export const stageShot: GalleryShot = {
   src: stage,
   alt: "Luke Jaroszewski on stage with both arms raised while calling a sale.",
   widths: [400, 720, 1000, 1097],
-  position: "center 28%",
+  position: "center 30%",
 };
 
 const callingShot: GalleryShot = {
   src: calling,
   alt: "Luke Jaroszewski calling bids into a microphone, with notes in one hand and bidders seated behind him.",
-  widths: [400, 720, 1000, 1122],
+  widths: [400, 720, 880, 1088],
   position: "center 32%",
 };
 
@@ -55,8 +55,18 @@ export const guestShot: GalleryShot = {
   position: "center 40%",
 };
 
-/** Action photos for the home gallery. */
-export const homeShots: GalleryShot[] = [stageShot, callingShot, guestShot];
+const portraitShot: GalleryShot = {
+  src: portrait,
+  alt: portraitPhoto.alt,
+  widths: [400, 720, 935],
+  position: portraitPhoto.position,
+};
+
+/**
+ * Home gallery uses only photos that are not already the hero or the story.
+ * Two photos sit side by side at 3:2.
+ */
+export const homeShots: GalleryShot[] = [guestShot, portraitShot];
 
 /** Every photo, for the About gallery. */
 export const aboutShots: GalleryShot[] = [
@@ -72,7 +82,7 @@ export const aboutShots: GalleryShot[] = [
     widths: [400, 720, 935],
     position: "18% 22%",
   },
-  stageShot,
+  { ...stageShot, position: "18% 30%" },
   callingShot,
   guestShot,
 ];

@@ -1,5 +1,6 @@
 ---
 import AuctionList from "../components/AuctionList.astro";
+import BookingBand from "../components/BookingBand.astro";
 import PageIntro from "../components/PageIntro.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { upcomingAuctions, upcomingFrom } from "../data/site";
@@ -17,13 +18,29 @@ const sales = upcomingFrom(upcomingAuctions);
     lede="Benefit auctions lead the calendar. Estate and equipment dates are listed here too, once a sale is set."
   />
 
-  <section class="wrap py-16 md:py-24" aria-label="Scheduled sales">
-    <AuctionList
-      auctions={sales}
-      emptyTitle="None scheduled"
-      emptyText="There are no upcoming auctions on the calendar. When a sale is set, the date, location, and a short description will be listed here."
-      headingLevel="h2"
-      titleLevel="h2"
-    />
-  </section>
+  {
+    sales.length === 0 ? (
+      <section class="bg-cream" aria-label="Scheduled sales">
+        <div class="wrap py-14 md:py-20">
+          <p class="max-w-xl font-serif text-2xl leading-snug text-ink">
+            No public sales are scheduled right now.
+          </p>
+        </div>
+      </section>
+    ) : (
+      <section class="bg-cream" aria-label="Scheduled sales">
+        <div class="wrap py-14 md:py-20">
+          <AuctionList
+            auctions={sales}
+            emptyTitle="None scheduled"
+            emptyText="There are no upcoming auctions on the calendar. When a sale is set, the date, location, and a short description will be listed here."
+            headingLevel="h2"
+            titleLevel="h2"
+          />
+        </div>
+      </section>
+    )
+  }
+
+  <BookingBand id="auctions-booking" />
 </BaseLayout>
