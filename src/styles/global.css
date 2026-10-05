@@ -135,8 +135,9 @@
 .org-logo img {
   display: block;
   width: auto;
-  max-width: 100%;
-  height: 56px;
+  max-width: 80%;
+  height: auto;
+  max-height: 56px;
   object-fit: contain;
 }
 
@@ -568,11 +569,19 @@
   gap: 0.85rem;
 }
 
-.feature-side p {
+.feature-lead {
   margin: 0;
-  color: rgba(243, 238, 228, 0.88);
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.35;
+  color: var(--color-cream);
+}
+
+.feature-note {
+  margin: 0;
   font-size: 16px;
   line-height: 1.6;
+  color: rgba(243, 238, 228, 0.85);
 }
 
 .feature-side .btn-check {
@@ -584,7 +593,11 @@
   .feature-split {
     grid-template-columns: 1fr 1fr;
     gap: 2.5rem;
-    align-items: center;
+    align-items: start;
+  }
+
+  .feature-side {
+    padding-top: calc(2.4rem + 1rem);
   }
 }
 
@@ -692,7 +705,7 @@
 
 @media (max-width: 899px) {
   .hero-photo {
-    max-width: 400px;
+    max-width: 190px;
   }
 
   .hero-photo .shot-frame {
@@ -702,8 +715,14 @@
 }
 
 @media (min-width: 900px) {
+  .hero:has(.hero-photo) {
+    min-height: 0;
+  }
+
   .hero-photo {
     box-sizing: border-box;
+    /* Half the cropped source width (380 / 2), plus the 12px frame offset. */
+    width: min(202px, 100%);
     padding: 0 12px 12px 0;
   }
 
@@ -730,15 +749,12 @@
 
 .story-photo {
   margin: 0;
+  justify-self: center;
   border-radius: 2px;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4 / 5;
+  width: min(100%, 416px);
+  max-height: 520px;
   background: var(--color-cream-deep);
-}
-
-/* 4:3 shows more of the wide frame. Keep the focal point left so the
-   softened screen on the right of the file stays outside the crop. */
-.story-photo img {
-  object-position: 16% 28% !important;
 }
 
 @media (min-width: 900px) {
@@ -748,11 +764,7 @@
   }
 
   .story-photo {
-    aspect-ratio: 4 / 5;
-  }
-
-  .story-photo img {
-    object-position: center 30% !important;
+    justify-self: end;
   }
 }
 
@@ -786,16 +798,19 @@
   }
 }
 
-.photo-grid-2 .shot-frame {
+.photo-grid-2 .shot-frame,
+.photo-grid-4 .shot-frame {
   aspect-ratio: 3 / 2;
 }
 
 @media (min-width: 768px) {
-  .photo-grid-2 {
+  .photo-grid-2,
+  .photo-grid-4 {
     grid-template-columns: 1fr 1fr;
   }
 
-  .photo-grid-2 > :last-child:nth-child(odd) {
+  .photo-grid-2 > :last-child:nth-child(odd),
+  .photo-grid-4 > :last-child:nth-child(odd) {
     grid-column: auto;
   }
 }
@@ -1062,13 +1077,134 @@
   }
 }
 
+.footer-card {
+  padding: 24px;
+}
+
+.footer-card > h2 {
+  margin: 0;
+}
+
 .footer-card dd,
 .footer-card a {
   overflow-wrap: anywhere;
 }
 
 .footer-card address .mt-6 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+}
+
+.footer-card address .mt-6 > a {
+  width: 100%;
+  height: 44px;
+  min-height: 44px;
+  padding-inline: 0.4rem;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .footer-card address .mt-6 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.approach-steps {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  align-items: stretch;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.approach-steps > li {
+  height: 100%;
+}
+
+.approach-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  background: var(--color-forest);
+  color: var(--color-cream);
+  font-family: var(--font-serif);
+  font-size: 14px;
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .approach-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.empty-sale {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-cream);
+  padding: 1.5rem 0;
+}
+
+.empty-sale-card {
+  width: min(640px, calc(100% - 3rem));
+  margin-inline: auto;
+  padding: 40px;
+  border: 1px solid var(--color-line);
+  background: var(--color-paper);
+  text-align: center;
+}
+
+.empty-sale-icon {
+  display: block;
+  width: 32px;
+  height: 32px;
+  margin: 0 auto;
+  color: var(--color-forest);
+}
+
+.empty-sale-line {
+  margin: 1.25rem auto 0;
+  max-width: 28rem;
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.35;
+  color: var(--color-ink);
+}
+
+.empty-sale-actions {
+  display: flex;
   flex-direction: column;
+  gap: 0.75rem;
+  align-items: stretch;
+  margin-top: 1.5rem;
+}
+
+.empty-sale-actions .btn {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .empty-sale {
+    min-height: 360px;
+    padding: 0;
+  }
+
+  .empty-sale-actions {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .empty-sale-actions .btn {
+    width: auto;
+    min-width: 11rem;
+  }
 }
 
 .footer-nav-link {

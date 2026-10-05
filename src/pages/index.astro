@@ -42,7 +42,7 @@ const nextSale = sales.slice(0, 1);
             src={heroPhoto.src}
             alt={heroPhoto.alt}
             widths={[...heroPhoto.widths]}
-            sizes="(min-width: 900px) 440px, min(100vw, 28rem)"
+            sizes="190px"
             position={heroPhoto.position}
             formats={["webp", "jpeg"]}
             eager={true}
@@ -122,8 +122,8 @@ const nextSale = sales.slice(0, 1);
                       <p class="work-copy mt-3 text-pretty">{category.text}</p>
                     </div>
                     <div class="feature-side">
-                      <p>Live bid calling for charity and nonprofit sales</p>
-                      <p>{benefitCall}</p>
+                      <p class="feature-lead">Live bid calling for charity and nonprofit sales</p>
+                      <p class="feature-note">{benefitCall}</p>
                       <a href="/contact" class="btn-check">Check your date</a>
                     </div>
                   </div>
