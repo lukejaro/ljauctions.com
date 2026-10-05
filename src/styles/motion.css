@@ -201,7 +201,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  padding-bottom: clamp(2.75rem, 8vh, 5.5rem);
+  padding-bottom: 0;
 }
 
 .hero-rule {
@@ -215,14 +215,8 @@
 
 .work-list {
   display: grid;
-  gap: 1.5rem;
-  margin-top: 2.5rem;
-}
-
-@media (min-width: 640px) {
-  .work-list {
-    grid-template-columns: 1fr 1fr;
-  }
+  gap: 1rem;
+  margin-top: 2.25rem;
 }
 
 footer address {
@@ -383,104 +377,7 @@ footer address::after {
   }
 }
 
-/* Desktop story: one paper stage stays pinned. The four categories take turns inside it. */
-@media (min-width: 1000px) and (min-height: 640px) and (prefers-reduced-motion: no-preference) {
-  @supports (animation-timeline: view()) {
-    .work {
-      height: 360vh;
-      padding-top: 0;
-      padding-bottom: 0;
-      view-timeline-name: --work;
-      view-timeline-axis: block;
-    }
-
-    .work-pin {
-      position: sticky;
-      top: 4.85rem;
-      display: grid;
-      grid-template-columns: minmax(13rem, 17rem) minmax(0, 1fr);
-      gap: 2.5rem;
-      align-items: stretch;
-      height: calc(100svh - 4.85rem);
-      padding: 1.75rem 0;
-    }
-
-    .work-intro {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .work-index,
-    .work-rail {
-      display: none;
-    }
-
-    .work-list {
-      position: relative;
-      display: block;
-      height: auto;
-      min-height: 0;
-      margin: 0;
-      overflow: hidden;
-      border: 1px solid var(--color-line);
-      background: var(--color-paper);
-    }
-
-    .work-list > .work-card:nth-child(n) {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      margin: 0;
-      padding: 2.75rem 2.5rem;
-      animation-duration: auto;
-      animation-timing-function: linear;
-      animation-fill-mode: both;
-      animation-timeline: --work;
-      animation-range: 0% 100%;
-      background: var(--color-paper);
-    }
-
-    .work-card-0 {
-      animation-name: work-hold-0;
-    }
-
-    .work-card-1 {
-      animation-name: work-hold-1;
-    }
-
-    .work-card-2 {
-      animation-name: work-hold-2;
-    }
-
-    .work-card-3 {
-      animation-name: work-hold-3;
-    }
-
-    .work-list > .work-card:nth-child(n) > p:first-child {
-      margin: 0;
-      font-size: clamp(3.25rem, 5vw, 4.75rem);
-      line-height: 0.9;
-      color: var(--color-wood);
-    }
-
-    .work-list > .work-card:nth-child(n) h3 {
-      max-width: 16ch;
-      margin-top: 0.85rem;
-      font-size: clamp(1.85rem, 2.4vw, 2.35rem);
-    }
-
-    .work-list > .work-card:nth-child(n) > p:last-child {
-      max-width: 38ch;
-      margin-top: 0.85rem;
-    }
-  }
-}
-
-/* Phone and tablet: no parallax drift. The desktop pin stays on tall, wide windows only. */
+/* Phone and tablet: no parallax drift. */
 @media (max-width: 999px) {
   .hero-mark,
   .hero-wash {
@@ -503,9 +400,9 @@ footer address::after {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
     gap: 0.5rem;
-    padding: 0.5rem 0.75rem calc(0.5rem + env(safe-area-inset-bottom));
+    padding: 0.55rem 0.75rem calc(0.55rem + env(safe-area-inset-bottom));
     background: var(--color-bark);
-    border-top: 1px solid rgba(243, 238, 228, 0.22);
+    border-top: 1px solid rgba(201, 165, 109, 0.45);
   }
 }
 
@@ -532,8 +429,8 @@ footer address::after {
 
 /* Split hero: the portrait sits in the column. No giant mark behind it. */
 .hero:has(.hero-photo) {
-  min-height: 0;
-  align-items: stretch;
+  min-height: 640px;
+  align-items: center;
 }
 
 .hero:has(.hero-photo) .hero-mark {
@@ -545,30 +442,42 @@ footer address::after {
   gap: 1.75rem;
   width: 100%;
   align-items: center;
-  padding-top: 1.5rem;
+  padding-top: clamp(1.5rem, 4vw, 3.25rem);
+  padding-bottom: clamp(2.25rem, 6vw, 4.25rem);
 }
 
 .hero-photo {
-  order: -1;
-  width: min(100%, 22rem);
+  order: 0;
+  width: 100%;
+  max-width: 28rem;
   margin: 0;
   justify-self: center;
 }
 
+@media (max-width: 899px) {
+  .hero:has(.hero-photo) {
+    min-height: 0;
+  }
+}
+
 @media (min-width: 900px) {
   .hero:has(.hero-photo) {
-    min-height: calc(100svh - 4.75rem);
+    min-height: 640px;
     align-items: center;
   }
 
   .hero-split {
-    grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 22rem);
-    gap: 2.5rem;
+    grid-template-columns: 7fr 5fr;
+    gap: 3rem;
+    align-items: center;
   }
 
   .hero-photo {
-    order: 0;
+    width: 440px;
+    max-width: none;
     justify-self: end;
+    margin-right: 12px;
+    margin-bottom: 12px;
   }
 }
 

@@ -1,10 +1,9 @@
 ---
-import AuctionList from "../components/AuctionList.astro";
 import OrgLogos from "../components/OrgLogos.astro";
 import PhotoGrid from "../components/PhotoGrid.astro";
 import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { homeShots, wavingPhoto } from "../data/photos";
+import { heroPhoto, homeShots } from "../data/photos";
 import {
   auctionCategories,
   bookingSteps,
@@ -23,35 +22,24 @@ const nextSale = sales.slice(0, 1);
 <BaseLayout title={site.name} description={site.description}>
   <section class="hero on-dark bg-bark text-cream">
     <div class="hero-wash" aria-hidden="true"></div>
-    <div class="hero-split mx-auto max-w-5xl px-6">
+    <div class="hero-split wrap">
       <div class="hero-copy">
-        <p class="hero-item text-xs font-semibold uppercase tracking-[0.22em] text-cream">Auctioneer</p>
-        <span class="hero-item hero-rule mt-4 block h-px w-12 bg-brass" aria-hidden="true"></span>
-        <h1 class="hero-item mt-6 font-serif text-5xl leading-tight md:text-6xl">{site.name}</h1>
-        <p class="hero-item mt-5 max-w-xl text-xl text-pretty text-cream/90">{site.positioning}</p>
-        <div class="hero-item mt-10 flex flex-wrap gap-3">
-          <a
-            href="/contact"
-            class="inline-flex min-h-11 items-center justify-center bg-cream px-5 text-sm font-semibold text-forest hover:bg-paper"
-          >
-            Check your date
-          </a>
-          <a
-            href={`tel:${contact.phoneTel}`}
-            class="inline-flex min-h-11 items-center justify-center border border-cream/70 px-5 text-sm font-semibold text-cream hover:bg-cream/10"
-          >
-            Call {contact.phoneDisplay}
-          </a>
+        <p class="hero-item hero-kicker">LJ AUCTIONS · TEXAS AUCTIONEER #18590</p>
+        <h1 class="hero-item hero-title">Benefit auctioneer for nonprofits.</h1>
+        <p class="hero-item hero-sub">{site.positioning}</p>
+        <div class="hero-item hero-actions">
+          <a href="/contact" class="btn-check">Check your date</a>
+          <a href={`tel:${contact.phoneTel}`} class="btn-call">Call {contact.phoneDisplay}</a>
         </div>
       </div>
       <figure class="hero-photo">
         <div class="shot-frame">
           <Shot
-            src={wavingPhoto.src}
-            alt={wavingPhoto.alt}
-            widths={[...wavingPhoto.widths]}
-            sizes="(min-width: 900px) 22rem, min(22rem, calc(100vw - 3rem))"
-            position={wavingPhoto.position}
+            src={heroPhoto.src}
+            alt={heroPhoto.alt}
+            widths={[...heroPhoto.widths]}
+            sizes="(min-width: 900px) 440px, min(100vw, 28rem)"
+            position={heroPhoto.position}
             eager={true}
           />
         </div>
@@ -59,13 +47,13 @@ const nextSale = sales.slice(0, 1);
     </div>
   </section>
 
-  <section aria-label="Confirmed facts" class="border-b border-line bg-cream-deep">
-    <dl class="reveal-group mx-auto grid max-w-5xl gap-8 px-6 py-8 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+  <section aria-label="Confirmed facts" class="stat-band">
+    <dl class="stat-grid wrap">
       {
         confirmedStats.map((item) => (
           <div>
-            <dt class="text-xs font-semibold uppercase tracking-[0.16em] text-wood">{item.label}</dt>
-            <dd class="mt-2 text-lg text-ink">{item.text}</dd>
+            <dd class="stat-value">{item.text}</dd>
+            <dt class="stat-label">{item.label}</dt>
           </div>
         ))
       }
@@ -74,46 +62,35 @@ const nextSale = sales.slice(0, 1);
 
   <OrgLogos />
 
-  <section class="mx-auto max-w-5xl px-6 py-16 md:py-20" aria-labelledby="story-teaser">
-    <p class="reveal text-xs font-semibold uppercase tracking-[0.18em] text-forest">About</p>
+  <section class="wrap py-16 md:py-20" aria-labelledby="story-teaser">
+    <p class="reveal eyebrow text-wood">About</p>
     <h2 id="story-teaser" class="reveal mt-3 font-serif text-3xl text-ink md:text-4xl">{story.heading}</h2>
     <div class="reveal mt-6 max-w-2xl space-y-4 text-lg text-pretty text-ink">
-      <p>{story.paragraphs[0]}</p>
       <p>{story.paragraphs[1]}</p>
+      <p>{story.paragraphs[2]}</p>
+      <p>{story.paragraphs[0]}</p>
     </div>
     <p class="reveal mt-6">
-      <a
-        href="/about#my-story"
-        class="inline-flex min-h-11 items-center font-semibold text-forest underline decoration-1 underline-offset-4 hover:text-forest-deep"
-      >
+      <a href="/about#my-story" class="font-semibold text-forest underline decoration-1 underline-offset-4 hover:text-forest-deep">
         Read my story
       </a>
     </p>
   </section>
 
-  <section class="work mx-auto max-w-5xl px-6 py-16 md:py-20" aria-labelledby="what-we-auction">
-    <div class="work-pin">
+  <section class="work border-t border-line" aria-labelledby="what-we-auction">
+    <div class="work-pin wrap py-14 md:py-16">
       <div class="work-intro">
-        <p class="text-xs font-semibold uppercase tracking-[0.18em] text-forest">The work</p>
-        <h2 id="what-we-auction" class="work-list-heading mt-3 font-serif text-3xl text-ink md:text-4xl">
-          What we auction
-        </h2>
-        <ol class="work-index" aria-hidden="true">
-          <li>01</li>
-          <li>02</li>
-          <li>03</li>
-          <li>04</li>
-        </ol>
-        <div class="work-rail" aria-hidden="true"><span></span></div>
+        <p class="eyebrow text-wood">The work</p>
+        <h2 id="what-we-auction" class="mt-3 font-serif text-3xl text-ink md:text-4xl">What we auction</h2>
       </div>
       <ol class="work-list">
         {
           auctionCategories.map((category, index) => (
-            <li class:list={["work-card border border-line bg-paper px-6 py-6", `work-card-${index}`]}>
-              <p class="font-serif text-sm text-wood" aria-hidden="true">
+            <li class:list={["work-card", `work-card-${index}`]}>
+              <p class="work-num" aria-hidden="true">
                 {String(index + 1).padStart(2, "0")}
               </p>
-              <h3 class="mt-3 font-serif text-2xl leading-tight text-ink">{category.title}</h3>
+              <h3 class="mt-4 font-serif text-2xl leading-tight text-ink">{category.title}</h3>
               <p class="mt-3 text-pretty text-ink-soft">{category.text}</p>
             </li>
           ))
@@ -122,16 +99,16 @@ const nextSale = sales.slice(0, 1);
     </div>
   </section>
 
-  <section class="border-t border-line" aria-labelledby="how-booking">
-    <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
-      <p class="reveal text-xs font-semibold uppercase tracking-[0.18em] text-forest">Booking</p>
+  <section class="border-t border-line bg-cream-deep" aria-labelledby="how-booking">
+    <div class="wrap py-16 md:py-20">
+      <p class="reveal eyebrow text-wood">Booking</p>
       <h2 id="how-booking" class="reveal mt-3 font-serif text-3xl text-ink md:text-4xl">How a date gets on the book</h2>
-      <ol class="reveal-group mt-8 grid gap-6 md:grid-cols-3">
+      <ol class="reveal-group mt-8 grid gap-4 md:grid-cols-3">
         {
           bookingSteps.map((step, index) => (
-            <li class="border-t-2 border-forest bg-paper px-5 py-6">
-              <p class="font-serif text-sm text-wood">{String(index + 1).padStart(2, "0")}</p>
-              <h3 class="mt-3 font-serif text-xl leading-tight text-ink">{step.title}</h3>
+            <li class="work-card">
+              <p class="work-num">{String(index + 1).padStart(2, "0")}</p>
+              <h3 class="mt-4 font-serif text-xl leading-tight text-ink">{step.title}</h3>
               <p class="mt-3 text-pretty text-ink-soft">{step.text}</p>
             </li>
           ))
@@ -141,8 +118,8 @@ const nextSale = sales.slice(0, 1);
   </section>
 
   <section class="border-t border-line" aria-labelledby="calling">
-    <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
-      <p class="reveal text-xs font-semibold uppercase tracking-[0.18em] text-forest">The call</p>
+    <div class="wrap py-16 md:py-20">
+      <p class="reveal eyebrow text-wood">The call</p>
       <h2 id="calling" class="reveal mt-3 font-serif text-3xl text-ink md:text-4xl">On the stand</h2>
       <div class="mt-8">
         <PhotoGrid shots={homeShots} labelledBy="calling" />
@@ -150,31 +127,35 @@ const nextSale = sales.slice(0, 1);
     </div>
   </section>
 
-  <section class="border-t border-line" aria-labelledby="next-sale">
-    <div class="mx-auto max-w-5xl px-6 py-16 md:py-20">
-      <p class="reveal text-xs font-semibold uppercase tracking-[0.18em] text-forest">Calendar</p>
-      <h2 id="next-sale" class="reveal mt-3 font-serif text-3xl text-ink md:text-4xl">Next sale</h2>
-      <div class="mt-8">
-        <AuctionList
-          auctions={nextSale}
-          emptyTitle="None scheduled"
-          emptyText="No sale is on the calendar. Dates will be posted here when they are set."
-          headingLevel="h3"
-          titleLevel="h3"
-        />
-      </div>
-      {
-        sales.length > 1 && (
-          <p class="mt-6">
-            <a
-              href="/auctions"
-              class="font-semibold text-forest underline decoration-1 underline-offset-4 hover:text-forest-deep"
-            >
-              See all upcoming auctions
-            </a>
-          </p>
-        )
-      }
-    </div>
-  </section>
+  {
+    sales.length === 0 ? (
+      <section class="next-band border-t border-line" aria-labelledby="next-sale">
+        <div class="wrap next-band-inner">
+          <h2 id="next-sale" class="font-serif text-2xl text-ink">
+            Now booking. Check your date.
+          </h2>
+          <a href="/contact" class="btn-check btn-check-ink">
+            Check your date
+          </a>
+        </div>
+      </section>
+    ) : (
+      <section class="border-t border-line" aria-labelledby="next-sale">
+        <div class="wrap py-16">
+          <h2 id="next-sale" class="font-serif text-3xl text-ink">
+            Next sale
+          </h2>
+          <ol class="mt-6 divide-y divide-line border-y border-line">
+            {nextSale.map((auction) => (
+              <li class="py-6">
+                <p class="font-semibold text-forest">{auction.date}</p>
+                <p class="mt-1 font-serif text-2xl text-ink">{auction.title}</p>
+                <p class="mt-1 text-ink-soft">{auction.location}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    )
+  }
 </BaseLayout>

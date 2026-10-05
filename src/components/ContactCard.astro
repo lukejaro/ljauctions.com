@@ -20,15 +20,15 @@ const isCard = tone === "card";
   class:list={[
     "not-italic",
     isCard
-      ? "border border-wood bg-paper px-6 py-8 shadow-[inset_0_0_0_1px_#f3eee4] sm:px-8"
+      ? "border border-line bg-paper px-6 py-9 shadow-[0_18px_40px_rgba(42,30,22,0.06)] sm:px-10 sm:py-11"
       : "on-dark text-cream",
   ]}
 >
   <div class="flex items-center gap-4">
     <span
       class:list={[
-        "grid h-12 w-12 shrink-0 place-items-center font-serif text-sm font-bold",
-        isCard ? "bg-forest text-cream" : "bg-cream text-forest",
+        "mark",
+        !isCard && "mark-light",
       ]}
       aria-hidden="true"
     >
@@ -55,8 +55,8 @@ const isCard = tone === "card";
       download={vcardFile.filename}
       type="text/vcard"
       class:list={[
-        "inline-flex min-h-11 w-full items-center justify-center px-5 text-sm font-semibold sm:w-auto",
-        isCard ? "bg-forest text-cream hover:bg-forest-deep" : "bg-cream text-forest hover:bg-paper",
+        "btn w-full sm:w-auto",
+        isCard ? "btn-primary" : "btn-cream",
       ]}
     >
       Add to contacts
@@ -64,10 +64,8 @@ const isCard = tone === "card";
     <a
       href={mailto}
       class:list={[
-        "inline-flex min-h-11 w-full items-center justify-center px-5 text-sm font-semibold sm:w-auto",
-        isCard
-          ? "border border-forest text-forest hover:bg-cream-deep"
-          : "border border-cream/50 text-cream hover:bg-cream/10",
+        "btn w-full sm:w-auto",
+        isCard ? "btn-line-ink" : "btn-line",
       ]}
     >
       Email us

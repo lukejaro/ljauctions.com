@@ -15,7 +15,7 @@ export const site = {
   url: "https://ljauctions.com",
   positioning: "Auctioneer for benefit auctions, estates, and equipment.",
   description:
-    "Luke Jaroszewski calls benefit and charity auctions, estates, and equipment. Texas Auctioneer License #18590.",
+    "Luke Jaroszewski calls benefit and charity auctions for nonprofits, and also estates and equipment. Texas Auctioneer License #18590.",
 } as const;
 
 export const contact = {
@@ -124,7 +124,7 @@ export const nonprofitWork = {
 
 /** Confirmed facts only. No years-in-business, region, or client names. */
 export const confirmedStats = [
-  { label: "Started", text: "At 18" },
+  { label: "Started auctioneering", text: "At 18" },
   { label: "Nonprofit auctions", text: "Hundreds" },
   { label: "Sales helped raise", text: "$3M+ gross" },
   { label: "Nonprofits", text: "100+" },
@@ -222,7 +222,11 @@ export function credibilityItems(): DisplayValue[] {
 
 export const auctionCategories = [
   {
-    title: "Estates & personal property",
+    title: "Benefit & charity",
+    text: nonprofitWork.sentence,
+  },
+  {
+    title: "Estates",
     text: "Household goods, collections, and the contents of a home, offered in a published order of sale.",
   },
   {
@@ -233,13 +237,13 @@ export const auctionCategories = [
     title: "Business dispersals",
     text: "Inventory, fixtures, and equipment when a business closes, moves, or reduces stock.",
   },
-  {
-    title: "Specialty sales",
-    text: "Single-owner collections and benefit auctions arranged with the seller in advance.",
-  },
 ] as const;
 
 export const services = [
+  {
+    title: "Benefit and charity auctions",
+    text: nonprofitWork.sentence,
+  },
   {
     title: "The call",
     text: "Live bid calling for an on-site sale. Increments stay intelligible, terms are posted before the first lot, and the winning bid is stated clearly.",
@@ -255,10 +259,6 @@ export const services = [
   {
     title: "Business and inventory",
     text: "Closing stock, fixtures, and surplus offered in one sale or a short series, with a lot order set before the date.",
-  },
-  {
-    title: "Benefit and charity auctions",
-    text: nonprofitWork.sentence,
   },
   {
     title: "Sale preparation",

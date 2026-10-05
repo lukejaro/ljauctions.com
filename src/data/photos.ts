@@ -12,6 +12,14 @@ export interface GalleryShot {
   position: string;
 }
 
+/** Home hero. Action on the stand; no event or venue in the alt text. */
+export const heroPhoto = {
+  src: calling,
+  alt: "Luke Jaroszewski calling bids into a microphone, with notes in one hand and bidders seated behind him.",
+  widths: [480, 720, 1000, 1122],
+  position: "center 30%",
+} as const;
+
 export const wavingPhoto = {
   src: waving,
   alt: "Luke Jaroszewski smiling and waving, wearing a dark jacket, in front of a wood wall.",

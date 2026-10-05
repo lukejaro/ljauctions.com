@@ -5,55 +5,19 @@ const pathname = Astro.url.pathname;
 ---
 
 <div class="h-1 bg-forest" aria-hidden="true" transition:name="brand-rule" transition:animate="none"></div>
-<header class="sticky top-0 z-30 border-b border-line bg-cream" transition:name="site-header" transition:animate="none">
-  <div class="relative mx-auto flex max-w-5xl items-center justify-between gap-4 px-6">
+<header class="sticky top-0 z-30 border-b border-line bg-cream/95 backdrop-blur-sm" transition:name="site-header" transition:animate="none">
+  <div class="wrap flex items-center justify-between gap-4">
     <a href="/" class="flex min-h-16 items-center gap-3 py-3">
-      <span
-        class="grid h-10 w-10 shrink-0 place-items-center bg-forest font-serif text-sm font-bold text-cream"
-        aria-hidden="true"
-      >
-        LJ
-      </span>
+      <span class="mark" aria-hidden="true">LJ</span>
       <span class="leading-tight">
         <span class="block font-serif text-lg leading-none text-ink">{site.name}</span>
         <span class="mt-1 block text-xs leading-none tracking-wide text-ink-soft">{site.domain}</span>
       </span>
     </a>
 
-    <nav class="hidden md:block" aria-label="Primary">
-      <ul class="flex items-center gap-1">
-        {
-          nav.map((item) => {
-            const current = isCurrentPath(pathname, item.href);
-            return (
-              <li>
-                <a
-                  href={item.href}
-                  aria-current={current ? "page" : undefined}
-                  class:list={[
-                    "inline-flex min-h-11 items-center px-3 text-sm font-semibold",
-                    current
-                      ? "text-forest underline decoration-2 underline-offset-8"
-                      : "text-ink hover:text-forest",
-                  ]}
-                >
-                  {item.label}
-                </a>
-              </li>
-            );
-          })
-        }
-      </ul>
-    </nav>
-
-    <details class="md:hidden">
-      <summary
-        class="flex min-h-11 min-w-11 cursor-pointer items-center justify-center border border-line px-3 text-sm font-semibold text-ink"
-      >
-        Menu
-      </summary>
-      <nav aria-label="Primary" class="absolute inset-x-0 top-full z-40 border-b border-line bg-cream shadow-sm">
-        <ul class="mx-auto max-w-5xl px-3 py-2">
+    <div class="flex items-center gap-2">
+      <nav class="hidden md:block" aria-label="Primary">
+        <ul class="flex items-center gap-1">
           {
             nav.map((item) => {
               const current = isCurrentPath(pathname, item.href);
@@ -63,8 +27,10 @@ const pathname = Astro.url.pathname;
                     href={item.href}
                     aria-current={current ? "page" : undefined}
                     class:list={[
-                      "flex min-h-12 items-center px-3 text-base font-semibold",
-                      current ? "text-forest underline decoration-2 underline-offset-4" : "text-ink",
+                      "inline-flex min-h-11 items-center px-3 text-sm font-semibold",
+                      current
+                        ? "text-forest underline decoration-forest decoration-2 underline-offset-8"
+                        : "text-ink hover:text-forest",
                     ]}
                   >
                     {item.label}
@@ -75,6 +41,39 @@ const pathname = Astro.url.pathname;
           }
         </ul>
       </nav>
-    </details>
+
+      <a href="/contact" class="nav-cta">Check your date</a>
+
+      <details class="md:hidden">
+        <summary
+          class="flex min-h-11 min-w-11 cursor-pointer items-center justify-center border border-line bg-paper px-3 text-sm font-semibold text-ink"
+        >
+          Menu
+        </summary>
+        <nav aria-label="Primary" class="absolute inset-x-0 top-full z-40 border-b border-line bg-cream shadow-sm">
+          <ul class="wrap py-2">
+            {
+              nav.map((item) => {
+                const current = isCurrentPath(pathname, item.href);
+                return (
+                  <li>
+                    <a
+                      href={item.href}
+                      aria-current={current ? "page" : undefined}
+                      class:list={[
+                        "flex min-h-12 items-center px-1 text-base font-semibold",
+                        current ? "text-forest underline decoration-forest decoration-2 underline-offset-4" : "text-ink",
+                      ]}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                );
+              })
+            }
+          </ul>
+        </nav>
+      </details>
+    </div>
   </div>
 </header>
