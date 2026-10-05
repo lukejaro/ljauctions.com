@@ -1,7 +1,7 @@
 ---
 import PageIntro from "../components/PageIntro.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { contact, emailMailto, faqs, texasAuctioneerLicenseLine, vcardFile } from "../data/site";
+import { calendlyUrl, contact, emailMailto, faqs, texasAuctioneerLicenseLine, vcardFile } from "../data/site";
 
 const licenseLine = texasAuctioneerLicenseLine();
 const dateAnswer = faqs[1].answer;
@@ -31,6 +31,14 @@ const dateAnswer = faqs[1].answer;
           type="text/vcard"
         >
           Add to contacts
+        </a>
+        <a
+          class="contact-action contact-action-line"
+          href={calendlyUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Book a call
         </a>
       </div>
       <aside class="contact-panel">

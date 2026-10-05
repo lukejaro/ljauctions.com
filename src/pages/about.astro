@@ -5,7 +5,7 @@ import PageIntro from "../components/PageIntro.astro";
 import PhotoGrid from "../components/PhotoGrid.astro";
 import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { aboutShots, portraitPhoto } from "../data/photos";
+import { aboutShots, callingShot } from "../data/photos";
 import { approach, story, texasAuctioneerLicenseLine } from "../data/site";
 ---
 
@@ -24,11 +24,11 @@ import { approach, story, texasAuctioneerLicenseLine } from "../data/site";
     <div class="grid items-start gap-10 md:grid-cols-[minmax(14rem,18rem)_minmax(0,1fr)]">
       <figure class="shot-frame portrait-frame mx-auto w-full max-w-xs">
         <Shot
-          src={portraitPhoto.src}
-          alt={portraitPhoto.alt}
-          widths={[...portraitPhoto.widths]}
+          src={callingShot.src}
+          alt={callingShot.alt}
+          widths={[...callingShot.widths]}
           sizes="(min-width: 768px) 18rem, min(20rem, calc(100vw - 3rem))"
-          position={portraitPhoto.position}
+          position={callingShot.position}
         />
       </figure>
       <div>
