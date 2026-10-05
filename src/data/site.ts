@@ -35,6 +35,9 @@ export const contact = {
   address: null as string | null,
 };
 
+/** 30-minute intro call. Opens in a new tab from the contact page. */
+export const calendlyUrl = "https://calendly.com/luke-jaroszewski/30min";
+
 export const vcardFile = {
   href: "/luke-jaroszewski.vcf",
   filename: "luke-jaroszewski.vcf",

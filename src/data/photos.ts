@@ -1,7 +1,6 @@
 import type { ImageMetadata } from "astro";
 import calling from "../assets/photos/luke-calling.png";
 import stage from "../assets/photos/luke-on-stage.png";
-import portrait from "../assets/photos/luke-portrait.png";
 import waving from "../assets/photos/luke-waving.png";
 import guest from "../assets/photos/luke-with-guest.png";
 
@@ -24,14 +23,7 @@ export const wavingPhoto = {
   src: waving,
   alt: "Luke Jaroszewski smiling and waving, wearing a dark jacket, in front of a wood wall.",
   widths: [480, 720, 960, 1063],
-  position: "72% 14%",
-} as const;
-
-export const portraitPhoto = {
-  src: portrait,
-  alt: "Luke Jaroszewski in profile, holding a microphone, wearing a navy blazer.",
-  widths: [400, 700],
-  position: "center 30%",
+  position: "50% 30%",
 } as const;
 
 export const stageShot: GalleryShot = {
@@ -55,31 +47,25 @@ export const guestShot: GalleryShot = {
   position: "center 40%",
 };
 
-const portraitShot: GalleryShot = {
-  src: portrait,
-  alt: portraitPhoto.alt,
-  widths: [400, 700],
-  position: portraitPhoto.position,
+const wavingShot: GalleryShot = {
+  src: waving,
+  alt: wavingPhoto.alt,
+  widths: [480, 720, 960, 1063],
+  position: "50% 30%",
 };
 
 /**
- * Home gallery uses only photos that are not already the hero or the story.
- * Two photos sit side by side at 3:2.
+ * Home gallery. Two photos that are not the hero or the story, side by side at 3:2.
  */
-export const homeShots: GalleryShot[] = [guestShot, portraitShot];
+export const homeShots: GalleryShot[] = [guestShot, wavingShot];
 
 /**
- * About gallery: photos not already used on this page.
- * The story portrait stays out. Four images sit in a 2×2 at 3:2.
+ * About gallery. Photos not already used on this page, three across at 4:5.
  */
 export const aboutShots: GalleryShot[] = [
-  {
-    src: waving,
-    alt: wavingPhoto.alt,
-    widths: [400, 720, 1000, 1063],
-    position: "72% 14%",
-  },
-  callingShot,
-  guestShot,
-  { ...stageShot, position: "center 72%" },
+  wavingShot,
+  { ...guestShot, position: "50% 30%" },
+  { ...stageShot, position: "50% 30%" },
 ];
+
+export { callingShot };

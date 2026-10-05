@@ -8,14 +8,17 @@ interface Props {
 }
 
 const { shots, labelledBy } = Astro.props;
-const sizes = "(min-width: 900px) 30vw, (min-width: 640px) 46vw, 92vw";
+const sizes =
+  shots.length === 3
+    ? "(min-width: 768px) min(28vw, 420px), min(92vw, 420px)"
+    : "(min-width: 900px) 40vw, (min-width: 768px) 46vw, 92vw";
 ---
 
 <ul
   class:list={[
     "photo-grid",
     shots.length === 2 && "photo-grid-2",
-    shots.length === 4 && "photo-grid-4",
+    shots.length === 3 && "photo-grid-3",
   ]}
   aria-labelledby={labelledBy}
 >

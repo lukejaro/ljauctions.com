@@ -53,7 +53,7 @@ const isCard = tone === "card";
     </div>
   </div>
 
-  <div class="mt-6 flex flex-col gap-3 sm:flex-row">
+  <div class="contact-buttons mt-6 flex flex-col gap-3 sm:flex-row">
     <a
       href={vcardFile.href}
       download={vcardFile.filename}
@@ -76,35 +76,46 @@ const isCard = tone === "card";
     </a>
   </div>
 
-  <dl class:list={["mt-6", isCard ? "divide-y divide-line" : "divide-y divide-cream/20"]}>
+  <dl class:list={["contact-fields mt-6", isCard ? "divide-y divide-line" : "divide-y divide-cream/20"]}>
     {
-      fields.map((field) => (
-        <div class="grid gap-1 py-3 sm:grid-cols-[8.5rem_1fr] sm:items-baseline sm:gap-4">
-          <dt
-            class:list={[
-              "text-xs font-semibold uppercase tracking-[0.14em]",
-              isCard ? "text-wood" : "text-brass",
-            ]}
-          >
-            {field.label}
-          </dt>
-          <dd id={`${idPrefix}${field.id}`} class:list={["text-base", isCard ? "text-ink" : "text-cream"]}>
-            {field.href ? (
-              <a
-                href={field.href}
-                class:list={[
-                  "inline-flex min-h-11 items-center underline decoration-1 underline-offset-4",
-                  isCard ? "hover:text-forest" : "hover:text-brass",
-                ]}
-              >
-                {field.text}
-              </a>
-            ) : (
-              <span class="whitespace-pre-line">{field.text}</span>
-            )}
-          </dd>
-        </div>
-      ))
+      fields.map((field) => {
+        const at = field.id === "email" ? field.text.indexOf("@") : -1;
+        return (
+          <div class="contact-field grid gap-1 py-3 sm:grid-cols-[8.5rem_1fr] sm:items-baseline sm:gap-4">
+            <dt
+              class:list={[
+                "text-xs font-semibold uppercase tracking-[0.14em]",
+                isCard ? "text-wood" : "text-brass",
+              ]}
+            >
+              {field.label}
+            </dt>
+            <dd id={`${idPrefix}${field.id}`} class:list={["text-base", isCard ? "text-ink" : "text-cream"]}>
+              {field.href ? (
+                <a
+                  href={field.href}
+                  class:list={[
+                    "inline-flex min-h-11 items-center underline decoration-1 underline-offset-4",
+                    isCard ? "hover:text-forest" : "hover:text-brass",
+                  ]}
+                >
+                  {at > 0 ? (
+                    <>
+                      {field.text.slice(0, at + 1)}
+                      <wbr />
+                      {field.text.slice(at + 1)}
+                    </>
+                  ) : (
+                    field.text
+                  )}
+                </a>
+              ) : (
+                <span class="whitespace-pre-line">{field.text}</span>
+              )}
+            </dd>
+          </div>
+        );
+      })
     }
   </dl>
 </address>
