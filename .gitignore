@@ -7,3 +7,9 @@ dist/
 *.log
 .env
 .env.*
+
+# Generated from assets-b64/ by scripts/decode-assets.mjs
+public/favicon.ico
+public/favicon-32.png
+public/apple-touch-icon.png
+public/hero/
