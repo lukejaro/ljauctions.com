@@ -9,6 +9,10 @@ const targets = {
   "favicon-32.png.b64": "public/favicon-32.png",
   "apple-touch-icon.png.b64": "public/apple-touch-icon.png",
   "luke-calling-cutout.webp.b64": "public/hero/luke-calling-cutout.webp",
+  "luke-calling-hd-desktop.webp.b64": "public/hero/luke-calling-hd-desktop.webp",
+  "luke-calling-hd-desktop.png.b64": "public/hero/luke-calling-hd-desktop.png",
+  "luke-calling-hd-mobile.webp.b64": "public/hero/luke-calling-hd-mobile.webp",
+  "luke-calling-hd-mobile.png.b64": "public/hero/luke-calling-hd-mobile.png",
 };
 
 for (const name of readdirSync("assets-b64")) {
