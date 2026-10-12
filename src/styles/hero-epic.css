@@ -908,3 +908,16 @@ section.hero:has(.hero-photo--cutout) .hero-split {
     mask-image: linear-gradient(to bottom, #000 0%, #000 50%, rgba(0, 0, 0, 0.4) 78%, transparent 97%);
   }
 }
+
+/* === Overflow fix: oversized (200%) light layers must never widen the page === */
+.hero--epic-1,
+.hero--epic-1 .epic-stage {
+  overflow: hidden !important;
+}
+@supports (overflow: clip) {
+  .hero--epic-1,
+  .hero--epic-1 .epic-stage {
+    overflow-x: clip !important;
+    overflow-y: clip !important;
+  }
+}
