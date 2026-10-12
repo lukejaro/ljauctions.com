@@ -4,7 +4,8 @@ import OrgLogos from "../components/OrgLogos.astro";
 import PhotoGrid from "../components/PhotoGrid.astro";
 import Shot from "../components/Shot.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { heroPhoto, homeShots, stageShot } from "../data/photos";
+import "../styles/hero-epic.css";
+import { homeShots, stageShot } from "../data/photos";
 import {
   auctionCategories,
   bookingSteps,
@@ -24,29 +25,39 @@ const nextSale = sales.slice(0, 1);
 ---
 
 <BaseLayout title={site.name} description={site.description}>
-  <section class="hero on-dark bg-bark text-cream">
+  <section class="hero on-dark bg-bark text-cream hero--epic hero--epic-1">
     <div class="hero-wash" aria-hidden="true"></div>
+    <div class="epic-stage epic-stage--1" aria-hidden="true">
+      <div class="epic-vignette"></div>
+      <div class="epic-spot"></div>
+      <div class="epic-rim"></div>
+      <div class="epic-haze"></div>
+      <div class="epic-rays"></div>
+      <div class="epic-grain"></div>
+    </div>
     <div class="hero-split wrap">
       <div class="hero-copy">
         <p class="hero-item hero-kicker">LJ AUCTIONS · TEXAS AUCTIONEER #18590</p>
-        <h1 class="hero-item hero-title">Benefit auctioneer for nonprofits.</h1>
+        <h1 class="hero-item hero-title">Benefit auctioneer for <span class="hero-title-em">nonprofits</span>.</h1>
         <p class="hero-item hero-sub">{site.positioning}</p>
         <div class="hero-item hero-actions">
           <a href="/contact" class="btn-check">Check your date</a>
           <a href={`tel:${contact.phoneTel}`} class="btn-call">Call {contact.phoneDisplay}</a>
         </div>
       </div>
-      <figure class="hero-photo">
-        <div class="shot-frame">
-          <Shot
-            src={heroPhoto.src}
-            alt={heroPhoto.alt}
-            widths={[...heroPhoto.widths]}
-            sizes="(min-width: 900px) 440px, 190px"
-            position={heroPhoto.position}
-            formats={["webp", "jpeg"]}
-            eager={true}
-          />
+      <figure class="hero-photo hero-photo--cutout">
+        <div class="cutout-fade">
+          <span class="cutout-edge-fade" aria-hidden="true"></span>
+          <img
+              src="/hero/luke-calling-cutout.webp"
+              alt="Luke Jaroszewski calling bids into a microphone."
+              width="836"
+              height="1516"
+              loading="eager"
+              decoding="async"
+              fetchpriority="high"
+              class="shot--cutout"
+            />
         </div>
       </figure>
     </div>

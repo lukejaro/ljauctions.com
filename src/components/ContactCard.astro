@@ -24,20 +24,19 @@ const isCard = tone === "card";
   class:list={[
     "not-italic",
     isCard
-      ? "border border-line bg-paper px-6 py-9 shadow-[0_18px_40px_rgba(42,30,22,0.06)] sm:px-10 sm:py-11"
+      ? "border border-line bg-paper px-6 py-9 shadow-[0_18px_40px_rgba(10,10,10,0.06)] sm:px-10 sm:py-11"
       : "on-dark text-cream",
   ]}
 >
   <div class="flex items-center gap-4">
-    <span
-      class:list={[
-        "mark",
-        !isCard && "mark-light",
-      ]}
+    <img
+      src={isCard ? "/logo/jl-mark-navy.svg" : "/logo/jl-mark-cream.svg"}
+      alt=""
       aria-hidden="true"
-    >
-      LJ
-    </span>
+      width="59"
+      height="44"
+      class="h-11 w-auto shrink-0"
+    />
     <div>
       <Heading class:list={["font-serif text-2xl leading-tight", isCard ? "text-ink" : "text-cream"]}>
         {contact.contactName}

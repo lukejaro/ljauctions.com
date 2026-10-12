@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="LJ Auctions">
-  <rect width="32" height="32" fill="#1c3b32"/>
-  <text x="16" y="21" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-size="13" font-weight="700" fill="#f3eee4">LJ</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16"><rect width="16" height="16" rx="3.2" fill="#1E2A44"/><path fill="#FAF7F2" transform="translate(2 3)" d="M7,0L9,0L9,8L12,8L12,10L3,10C1.343,10 0,8.657 0,7L0,5L2,5L2,7C2,7.552 2.448,8 3,8C3.552,8 4,7.552 4,7L4,0L6,0L6,8L7,8Z"/></svg>

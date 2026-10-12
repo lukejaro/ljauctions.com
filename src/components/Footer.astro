@@ -12,7 +12,7 @@ const slim = pathname === "/contact" || pathname === "/contact/";
   {
     slim ? (
       <div class="wrap footer-slim-row">
-        <p class="font-serif text-xl leading-tight">{site.name}</p>
+        <img src="/logo/jl-lockup-cream.svg" alt={site.name} width="141" height="30" class="h-[30px] w-auto" />
         <p class="text-sm text-cream/75">
           © {year} {site.name}
           {licenseLine && <span> · {licenseLine}</span>}
@@ -23,7 +23,7 @@ const slim = pathname === "/contact" || pathname === "/contact/";
         <div class="footer-grid wrap">
           <div class="footer-copy">
             <p class="eyebrow text-brass">Benefit auctions</p>
-            <p class="mt-4 font-serif text-3xl leading-tight">{site.name}</p>
+            <img src="/logo/jl-lockup-cream.svg" alt={site.name} width="188" height="40" class="mt-4 h-10 w-auto" />
             <p class="mt-4 max-w-sm text-lg text-cream/85">{site.positioning}</p>
           </div>
           <nav aria-label="Footer">
