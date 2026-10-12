@@ -5,17 +5,17 @@
   --font-sans: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Libre Baskerville", Georgia, "Times New Roman", serif;
 
-  --color-cream: #f3eee4;
-  --color-cream-deep: #e7dccb;
-  --color-paper: #faf7f2;
-  --color-ink: #241910;
-  --color-ink-soft: #4e3f32;
-  --color-wood: #6e4b2a;
-  --color-line: #d4c4ae;
-  --color-forest: #1c3b32;
-  --color-forest-deep: #132820;
-  --color-bark: #2a1e16;
-  --color-brass: #c9a56d;
+  --color-cream: #F3EEE4;
+  --color-cream-deep: #E8E0D4;
+  --color-paper: #FAF7F2;
+  --color-ink: #0A0A0A;
+  --color-ink-soft: #3F3F46;
+  --color-wood: #1E2A44;
+  --color-line: #D6CFC4;
+  --color-forest: #1E2A44;
+  --color-forest-deep: #141C2E;
+  --color-bark: #0A0A0A;
+  --color-brass: #A8B4C8;
 }
 
 @layer base {
@@ -124,7 +124,7 @@
   height: 88px;
   min-height: 88px;
   padding: 8px 12px;
-  border: 1px solid #d4c4ae;
+  border: 1px solid #D6CFC4;
   background: var(--color-paper);
 }
 
@@ -291,7 +291,7 @@
 }
 
 .hero-kicker {
-  color: #c9a56d;
+  color: #A8B4C8;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.14em;
@@ -485,7 +485,7 @@
   }
 
   .stat-grid > div + div {
-    border-left: 1px solid #d4c4ae;
+    border-left: 1px solid #D6CFC4;
   }
 }
 
@@ -509,7 +509,7 @@
 }
 
 .work-card {
-  border: 1px solid #d4c4ae;
+  border: 1px solid #D6CFC4;
   background: var(--color-paper);
   padding: 32px;
 }
@@ -522,7 +522,7 @@
   height: 2.4rem;
   padding: 0 0.35rem;
   background: var(--color-forest);
-  color: #c9a56d;
+  color: #A8B4C8;
   font-family: var(--font-serif);
   font-size: 0.95rem;
   line-height: 1;
@@ -562,8 +562,8 @@
 }
 
 .work-card-feature .work-num {
-  background: #c9a56d;
-  color: #2a1e16;
+  background: #A8B4C8;
+  color: #0A0A0A;
 }
 
 .feature-split {
@@ -751,7 +751,7 @@
     position: absolute;
     z-index: 0;
     inset: 12px 0 0 12px;
-    border: 1px solid #c9a56d;
+    border: 1px solid #A8B4C8;
     pointer-events: none;
   }
 
@@ -795,7 +795,7 @@
 
 .photo-grid .shot-frame {
   aspect-ratio: 4 / 3;
-  box-shadow: inset 0 0 0 1px rgba(42, 30, 22, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(10, 10, 10, 0.14);
 }
 
 @media (min-width: 768px) {
@@ -905,7 +905,7 @@
 
 .service-kicker {
   margin: 0 0 0.65rem;
-  color: #c9a56d;
+  color: #A8B4C8;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.18em;
@@ -952,11 +952,11 @@
 }
 
 .faq-list {
-  border-top: 1px solid #d4c4ae;
+  border-top: 1px solid #D6CFC4;
 }
 
 .faq-item {
-  border-bottom: 1px solid #d4c4ae;
+  border-bottom: 1px solid #D6CFC4;
 }
 
 .faq-summary {
