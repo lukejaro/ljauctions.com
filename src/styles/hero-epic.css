@@ -921,3 +921,33 @@ section.hero:has(.hero-photo--cutout) .hero-split {
     overflow-y: clip !important;
   }
 }
+
+/* === HD hero (2x assets: desktop 880x1100, mobile 654x1080) === */
+.hero--epic-1 .hero-photo--cutout .shot--cutout {
+  object-fit: contain !important;
+  object-position: bottom center !important;
+}
+@media (min-width: 900px) {
+  /* Column width is unchanged (h1 wrap stays the same); the figure is centred on it and may extend into the gutter. */
+  .hero--epic-1 .hero-photo--cutout {
+    align-self: start !important;
+    margin-top: 2.2rem !important;
+  }
+  .hero--epic-1 .cutout-fade picture {
+    width: 520px !important;
+    margin-inline: -30px;
+    flex: none;
+  }
+  .hero--epic-1 .hero-photo--cutout .shot--cutout {
+    width: 520px !important;
+    height: 650px !important;
+    max-height: none !important;
+  }
+}
+@media (max-width: 899px) {
+  .hero--epic-1 .hero-photo--cutout .shot--cutout {
+    width: 100% !important;
+    height: auto !important;
+    max-height: min(64vh, 560px) !important;
+  }
+}
