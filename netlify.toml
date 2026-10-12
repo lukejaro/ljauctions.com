@@ -25,3 +25,9 @@ for = "/luke-jaroszewski.vcf"
 [headers.values]
   Content-Type = "text/vcard; charset=utf-8"
   Content-Disposition = "attachment; filename=\"luke-jaroszewski.vcf\""
+
+# Old icon name: point stray requests at the current apple touch icon.
+[[redirects]]
+from = "/favicon-180.png"
+to = "/apple-touch-icon.png"
+status = 301
