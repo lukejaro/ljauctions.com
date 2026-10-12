@@ -55,3 +55,5 @@ Contact details, credentials, services, and the auction calendar live in [`src/d
 - `texasAuctioneerLicense` in `src/data/site.ts` is the TDLR number. It renders as “Texas Auctioneer License #…” on the contact card, in the footer, and on About. Leave it empty to hide those lines. Do not add an expiration date.
 - “Add to contacts” downloads [`public/luke-jaroszewski.vcf`](public/luke-jaroszewski.vcf). Astro rewrites that file from `renderVcard()` when it starts. On Netlify the file is served as `text/vcard` with an attachment filename.
 - Add sales to `upcomingAuctions`. An empty list renders “None scheduled” on the home teaser and the auctions page. Dates already past are omitted on the next build.
+
+<!-- deploy note: 2026-10-12 rebuild after PR #12 rollback -->
