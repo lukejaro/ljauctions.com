@@ -36,3 +36,8 @@ status = 301
 from = "/sitemap.xml"
 to = "/sitemap-index.xml"
 status = 301
+
+[[headers]]
+for = "/site.webmanifest"
+[headers.values]
+  Content-Type = "application/manifest+json; charset=utf-8"
