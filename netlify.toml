@@ -31,3 +31,8 @@ for = "/luke-jaroszewski.vcf"
 from = "/favicon-180.png"
 to = "/apple-touch-icon.png"
 status = 301
+
+[[redirects]]
+from = "/sitemap.xml"
+to = "/sitemap-index.xml"
+status = 301

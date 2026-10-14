@@ -7,6 +7,10 @@ import { dirname, join } from "node:path";
 const targets = {
   "favicon.ico.b64": "public/favicon.ico",
   "favicon-32.png.b64": "public/favicon-32.png",
+  "favicon-48.png.b64": "public/favicon-48.png",
+  "favicon-192.png.b64": "public/favicon-192.png",
+  "favicon-512.png.b64": "public/favicon-512.png",
+  "og-image.png.b64": "public/og-image.png",
   "apple-touch-icon.png.b64": "public/apple-touch-icon.png",
   "luke-calling-cutout.webp.b64": "public/hero/luke-calling-cutout.webp",
 };
