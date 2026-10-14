@@ -3,6 +3,7 @@ import type { IncomingMessage, ServerResponse } from "node:http";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import tailwindcss from "@tailwindcss/vite";
+import sitemap from "@astrojs/sitemap";
 import { defineConfig } from "astro/config";
 import type { Connect, Plugin } from "vite";
 import { renderVcard, vcardFile } from "./src/data/site";
@@ -40,6 +41,8 @@ function vcardHeaders(): Plugin {
 export default defineConfig({
   site: "https://ljauctions.com",
   output: "static",
+  trailingSlash: "ignore",
+  integrations: [sitemap({ filter: (page) => !page.includes("/404") })],
   vite: {
     plugins: [tailwindcss(), vcardHeaders()],
   },
