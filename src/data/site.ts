@@ -30,7 +30,7 @@ export const contact = {
   phoneTel: "+18307431180",
   email: "luke.jaroszewski@gmail.com",
   /** TODO: counties or region served. */
-  serviceArea: null as string | null,
+  serviceArea: "San Antonio, Seguin and Guadalupe County, the Texas Hill Country, and Central Texas" as string | null,
   /** TODO: mailing or office address. Use line breaks for a multi-line address. */
   address: null as string | null,
 };
@@ -323,16 +323,15 @@ export const upcomingAuctions: Auction[] = [];
 
 export const nav = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/services", label: "Services" },
-  { href: "/auctions", label: "Auctions" },
-  { href: "/contact", label: "Contact" },
+  { href: "/about/", label: "About" },
+  { href: "/services/", label: "Services" },
+  { href: "/auctions/", label: "Auctions" },
+  { href: "/contact/", label: "Contact" },
 ] as const;
 
 export function isCurrentPath(pathname: string, href: string): boolean {
-  const current =
-    pathname.length > 1 && pathname.endsWith("/") ? pathname.slice(0, -1) : pathname;
-  return current === href;
+  const trim = (path: string) => (path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path);
+  return trim(pathname) === trim(href);
 }
 
 export function upcomingFrom(auctions: readonly Auction[], now = new Date()): Auction[] {
