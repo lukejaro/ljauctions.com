@@ -10,7 +10,9 @@ const sales = upcomingFrom(upcomingAuctions);
 
 <BaseLayout
   title="Upcoming auctions"
-  description="Upcoming auctions conducted by LJ Auctions. The calendar is empty until a sale date is set."
+  seoTitle="Upcoming Auctions in Central Texas | LJ Auctions"
+  description="Upcoming benefit, estate and equipment auctions called by Texas auctioneer Luke Jaroszewski. Sale dates are posted here once they are set."
+  breadcrumb="Upcoming auctions"
 >
   <PageIntro
     eyebrow="Calendar"
@@ -28,7 +30,7 @@ const sales = upcomingFrom(upcomingAuctions);
           </svg>
           <p class="empty-sale-line">No public sales are scheduled right now.</p>
           <div class="empty-sale-actions">
-            <a class="btn btn-primary" href="/contact">Check your date</a>
+            <a class="btn btn-primary" href="/contact/">Check your date</a>
             <a class="btn btn-line-ink" href={`tel:${contact.phoneTel}`}>Call {contact.phoneDisplay}</a>
           </div>
         </div>
