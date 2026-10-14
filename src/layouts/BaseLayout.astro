@@ -8,7 +8,7 @@ import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import MobileBook from "../components/MobileBook.astro";
-import { contact, site } from "../data/site";
+import { contact, services, site } from "../data/site";
 
 const pageRise = {
   forwards: {
@@ -34,24 +34,108 @@ const pageRise = {
 interface Props {
   title: string;
   description: string;
+  /** Full <title> for search results. Defaults to "{title} · LJ Auctions". */
+  seoTitle?: string;
+  /** Breadcrumb label for inner pages (Home > label). */
+  breadcrumb?: string;
+  /** LCP image to preload (home hero). */
+  preloadImage?: string;
+  /** Keep the page out of search indexes (404). */
+  noindex?: boolean;
   /** Extra JSON-LD object, such as an FAQPage. */
   extraStructuredData?: Record<string, unknown>;
 }
 
-const { title, description, extraStructuredData } = Astro.props;
-const pageTitle = title === site.name ? site.name : `${title} · ${site.name}`;
-const canonical = new URL(Astro.url.pathname, Astro.site ?? site.url).href;
+const { title, description, seoTitle, breadcrumb, preloadImage, noindex = false, extraStructuredData } = Astro.props;
+const pageTitle = seoTitle ?? (title === site.name ? site.name : `${title} · ${site.name}`);
+const siteUrl = (Astro.site ?? new URL(site.url)).href.replace(/\/$/, "");
+const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const ogImage = `${siteUrl}/og-image.png`;
 
-const structuredData: Record<string, string> = {
-  "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  name: site.name,
-  url: site.url,
-  description: site.description,
-};
-if (contact.email) structuredData.email = contact.email;
-if (contact.phoneTel) structuredData.telephone = contact.phoneTel;
-if (contact.serviceArea) structuredData.areaServed = contact.serviceArea;
+const businessId = `${siteUrl}/#business`;
+const personId = `${siteUrl}/#luke`;
+const websiteId = `${siteUrl}/#website`;
+
+const areaServed = [
+  { "@type": "City", name: "San Antonio", containedInPlace: { "@type": "State", name: "Texas" } },
+  { "@type": "City", name: "Seguin", containedInPlace: { "@type": "State", name: "Texas" } },
+  { "@type": "AdministrativeArea", name: "Guadalupe County, Texas" },
+  { "@type": "Place", name: "Texas Hill Country" },
+  { "@type": "Place", name: "Central Texas" },
+  { "@type": "State", name: "Texas" },
+];
+
+const graph: Record<string, unknown>[] = [
+  {
+    "@type": "WebSite",
+    "@id": websiteId,
+    url: `${siteUrl}/`,
+    name: site.name,
+    inLanguage: "en-US",
+    publisher: { "@id": businessId },
+  },
+  {
+    "@type": ["Organization", "ProfessionalService"],
+    "@id": businessId,
+    name: site.name,
+    url: `${siteUrl}/`,
+    logo: { "@type": "ImageObject", url: `${siteUrl}/favicon-512.png`, width: 512, height: 512 },
+    image: ogImage,
+    description: site.description,
+    telephone: "+1-830-743-1180",
+    email: contact.email,
+    areaServed,
+    founder: { "@id": personId },
+    employee: { "@id": personId },
+    knowsAbout: ["Benefit auctions", "Charity auctions", "Nonprofit fundraising auctions", "Estate auctions", "Equipment auctions"],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Auction services",
+      itemListElement: services.map((service) => ({
+        "@type": "Offer",
+        itemOffered: {
+          "@type": "Service",
+          name: service.title,
+          description: service.text,
+          serviceType: "Auctioneering",
+          provider: { "@id": businessId },
+          areaServed,
+        },
+      })),
+    },
+  },
+  {
+    "@type": "Person",
+    "@id": personId,
+    name: contact.contactName,
+    givenName: contact.givenName,
+    familyName: contact.familyName,
+    jobTitle: "Auctioneer",
+    telephone: "+1-830-743-1180",
+    email: contact.email,
+    url: `${siteUrl}/about/`,
+    worksFor: { "@id": businessId },
+    hasCredential: {
+      "@type": "EducationalOccupationalCredential",
+      name: "Texas Auctioneer License #18590",
+      credentialCategory: "license",
+      identifier: "18590",
+      recognizedBy: { "@type": "GovernmentOrganization", name: "Texas Department of Licensing and Regulation" },
+    },
+  },
+];
+
+if (breadcrumb) {
+  graph.push({
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/` },
+      { "@type": "ListItem", position: 2, name: breadcrumb, item: canonical },
+    ],
+  });
+}
+
+const structuredData = { "@context": "https://schema.org", "@graph": graph };
 ---
 
 <!doctype html>
@@ -61,20 +145,34 @@ if (contact.serviceArea) structuredData.areaServed = contact.serviceArea;
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <meta name="theme-color" content="#1E2A44" />
+    {preloadImage && <link rel="preload" as="image" href={preloadImage} type="image/webp" fetchpriority="high" />}
+    {noindex && <meta name="robots" content="noindex, follow" />}
     <ClientRouter />
-    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" href="/favicon.ico" sizes="16x16 32x32 48x48" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicon-192.png" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png" />
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-    <link rel="canonical" href={canonical} />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
+    {!noindex && <link rel="canonical" href={canonical} />}
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:url" content={canonical} />
     <meta property="og:site_name" content={site.name} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="LJ Auctions logo with the line: Benefit auctioneer for nonprofits." />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="LJ Auctions logo with the line: Benefit auctioneer for nonprofits." />
     <title>{pageTitle}</title>
     <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
     {
