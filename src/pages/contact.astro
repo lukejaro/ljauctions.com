@@ -47,6 +47,16 @@ const dateAnswer = faqs[1].answer;
         <h2 id="what-to-send" class="font-serif text-2xl text-ink">What to send</h2>
         <p class="mt-4 text-pretty text-ink">{dateAnswer}</p>
         {licenseLine && <p class="mt-4 text-sm font-semibold tracking-wide text-ink">{licenseLine}</p>}
+        {
+          contact.serviceArea && (
+            <dl class="contact-fields mt-6 border-t border-line">
+              <div class="contact-field grid gap-1 py-3 sm:grid-cols-[8.5rem_1fr] sm:items-baseline sm:gap-4">
+                <dt class="text-xs font-semibold uppercase tracking-[0.14em] text-wood">Service area</dt>
+                <dd id="contact-service-area" class="text-base text-ink">{contact.serviceArea}</dd>
+              </div>
+            </dl>
+          )
+        }
       </aside>
     </div>
   </section>
