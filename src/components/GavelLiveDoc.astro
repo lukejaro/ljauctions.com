@@ -1,0 +1,99 @@
+---
+import {
+  gavelLiveCrumbs,
+  gavelLiveDraft,
+  gavelLivePage,
+  gavelLivePages,
+  gavelLivePreviewFacts,
+  gavelLiveSource,
+  type GavelLivePageId,
+} from "../data/gavel-live";
+import { renderGavelMarkdown } from "../lib/gavel-markdown";
+import { isCurrentPath } from "../data/site";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import PageIntro from "./PageIntro.astro";
+
+interface Props {
+  id: GavelLivePageId;
+}
+
+const { id } = Astro.props;
+const page = gavelLivePage(id);
+const crumbs = gavelLiveCrumbs(page);
+const pathname = Astro.url.pathname;
+const markdown = page.markdown ? renderGavelMarkdown(page.markdown) : "";
+---
+
+<BaseLayout title={page.documentTitle} description={page.description} breadcrumbs={crumbs} noindex={true}>
+  <p class="draft-banner" role="note">
+    <span class="wrap draft-banner-inner">
+      <strong>{gavelLiveDraft.bannerLead}</strong> {gavelLiveDraft.bannerText}
+    </span>
+  </p>
+
+  <PageIntro eyebrow={gavelLiveDraft.eyebrow} title={page.title} lede={page.lede}>
+    <nav slot="leading" class="wiki-crumbs" aria-label="Breadcrumb">
+      <ol>
+        <li>
+          <a href="/">Home</a>
+          <span aria-hidden="true">/</span>
+        </li>
+        {
+          crumbs.map((crumb, index) => {
+            const last = index === crumbs.length - 1;
+            return (
+              <li>
+                {last ? <span aria-current="page">{crumb.name}</span> : <a href={crumb.href}>{crumb.name}</a>}
+                {!last && <span aria-hidden="true">/</span>}
+              </li>
+            );
+          })
+        }
+      </ol>
+    </nav>
+  </PageIntro>
+
+  <div class="wiki-layout wrap">
+    <nav class="wiki-nav" aria-label="Gavel Live pages">
+      <p class="eyebrow text-forest">Pages</p>
+      <ul>
+        {
+          gavelLivePages.map((item) => {
+            const current = isCurrentPath(pathname, item.href);
+            return (
+              <li>
+                <a href={item.href} aria-current={current ? "page" : undefined}>
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
+
+    <div class="wiki-body">
+      {page.note && <p class="wiki-note">{page.note}</p>}
+      <ul class="preview-facts" aria-label="Preview limits">
+        {gavelLivePreviewFacts.map((fact) => <li>{fact}</li>)}
+      </ul>
+      {markdown && <div class="wiki-md" set:html={markdown} />}
+      {
+        page.spec && (
+          <div class="wiki-md">
+            <p>
+              <a class="btn btn-primary" href={gavelLiveSource.openapiHref} download={gavelLiveSource.openapiFilename}>
+                Download openapi.yaml
+              </a>
+            </p>
+            <pre><code class="language-yaml">{page.spec}</code></pre>
+          </div>
+        )
+      }
+      <p class="wiki-source">
+        Source: Gavel Live <a href={gavelLiveSource.pullRequest}>{gavelLiveSource.pullRequest}</a>. Commit
+        <code>{gavelLiveSource.commit}</code>. Unmerged, undeployed API preview. No live availability claim.
+      </p>
+    </div>
+  </div>
+</BaseLayout>

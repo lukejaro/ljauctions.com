@@ -1,61 +1,63 @@
 ---
-import { isCurrentPath, nav, site } from "../data/site";
+import { gavelLivePages, gavelLiveSection } from "../data/gavel-live";
+import { isCurrentPath, nav, navCurrent } from "../data/site";
 
 const pathname = Astro.url.pathname;
 ---
 
 <div class="h-1 bg-forest" aria-hidden="true" transition:name="brand-rule" transition:animate="none"></div>
 <header class="sticky top-0 z-30 border-b border-line bg-cream/95 backdrop-blur-sm" transition:name="site-header" transition:animate="none">
-  <div class="wrap flex items-center justify-between gap-4">
+  <div class="wrap site-bar">
     <a href="/" class="flex min-h-16 items-center py-3" aria-label="LJ Auctions home">
       <img src="/logo/jl-lockup.svg" alt="LJ Auctions" width="169" height="36" class="h-[30px] w-auto md:h-9" />
     </a>
 
-    <div class="flex items-center gap-2">
-      <nav class="hidden md:block" aria-label="Primary">
-        <ul class="flex items-center gap-1">
-          {
-            nav.map((item) => {
-              const current = isCurrentPath(pathname, item.href);
-              return (
-                <li>
-                  <a
-                    href={item.href}
-                    aria-current={current ? "page" : undefined}
-                    class:list={[
-                      "inline-flex min-h-11 items-center px-3 text-sm font-semibold",
-                      current
-                        ? "text-forest underline decoration-forest decoration-2 underline-offset-8"
-                        : "text-ink hover:text-forest",
-                    ]}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              );
-            })
-          }
-        </ul>
-      </nav>
+    <nav class="primary-nav" aria-label="Primary">
+      <ul class="flex flex-wrap items-center justify-end gap-1">
+        {
+          nav.map((item) => {
+            const current = navCurrent(pathname, item);
+            return (
+              <li>
+                <a
+                  href={item.href}
+                  aria-current={current}
+                  class:list={[
+                    "inline-flex min-h-11 items-center px-3 text-sm font-semibold",
+                    current
+                      ? "text-forest underline decoration-forest decoration-2 underline-offset-8"
+                      : "text-ink hover:text-forest",
+                  ]}
+                >
+                  {item.label}
+                </a>
+              </li>
+            );
+          })
+        }
+      </ul>
+    </nav>
 
+    <div class="site-bar-end">
       <a href="/contact/" class="nav-cta">Check your date</a>
 
-      <details class="md:hidden">
+      <details class="nav-menu">
         <summary
           class="flex min-h-11 min-w-11 cursor-pointer items-center justify-center border border-line bg-paper px-3 text-sm font-semibold text-ink"
         >
           Menu
         </summary>
-        <nav aria-label="Primary" class="absolute inset-x-0 top-full z-40 border-b border-line bg-cream shadow-sm">
+        <nav aria-label="Primary" class="nav-menu-panel absolute inset-x-0 top-full z-40 border-b border-line bg-cream shadow-sm">
           <ul class="wrap py-2">
             {
               nav.map((item) => {
-                const current = isCurrentPath(pathname, item.href);
+                const current = navCurrent(pathname, item);
+                const nested = item.href === gavelLiveSection.href;
                 return (
                   <li>
                     <a
                       href={item.href}
-                      aria-current={current ? "page" : undefined}
+                      aria-current={current}
                       class:list={[
                         "flex min-h-12 items-center px-1 text-base font-semibold",
                         current ? "text-forest underline decoration-forest decoration-2 underline-offset-4" : "text-ink",
@@ -63,6 +65,33 @@ const pathname = Astro.url.pathname;
                     >
                       {item.label}
                     </a>
+                    {
+                      nested && (
+                        <ul class="nav-sub" aria-label="Gavel Live pages">
+                          {
+                            gavelLivePages.map((page) => {
+                              const pageCurrent = isCurrentPath(pathname, page.href);
+                              return (
+                                <li>
+                                  <a
+                                    href={page.href}
+                                    aria-current={pageCurrent ? "page" : undefined}
+                                    class:list={[
+                                      "flex min-h-11 items-center px-1 text-[0.9375rem] font-semibold",
+                                      pageCurrent
+                                        ? "text-forest underline decoration-forest decoration-2 underline-offset-4"
+                                        : "text-ink",
+                                    ]}
+                                  >
+                                    {page.label}
+                                  </a>
+                                </li>
+                              );
+                            })
+                          }
+                        </ul>
+                      )
+                    }
                   </li>
                 );
               })
@@ -73,3 +102,14 @@ const pathname = Astro.url.pathname;
     </div>
   </div>
 </header>
+
+<script>
+  document.addEventListener("click", (event) => {
+    const target = event.target;
+    if (!(target instanceof Element)) return;
+    const link = target.closest("header details a");
+    if (!link) return;
+    const menu = link.closest("details");
+    if (menu instanceof HTMLDetailsElement) menu.open = false;
+  });
+</script>

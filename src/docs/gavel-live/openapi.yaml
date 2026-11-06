@@ -1,0 +1,189 @@
+openapi: 3.0.3
+info:
+  title: Gavel Live Admin API
+  version: "1"
+  description: |
+    Version 1 of the clerk admin API for one Gavel Live installation.
+    This installation is a single auction house, not a multi-tenant platform.
+    Money fields are integer cents. The token is sent as Authorization: Bearer gvl_…
+servers:
+  - url: "{base}/api/v1"
+    variables:
+      base:
+        default: http://127.0.0.1:3000
+security:
+  - bearerAuth: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    Error:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+              enum: [unauthorized, forbidden, not_found, validation_error, conflict, rate_limited, confirmation_required, invariant, internal]
+            message:
+              type: string
+    Page:
+      type: object
+      properties:
+        limit: { type: integer }
+        nextCursor: { type: string, nullable: true }
+paths:
+  /:
+    get:
+      summary: API version
+      security: []
+      responses:
+        "200":
+          description: Version banner. No credential required.
+  /auctions:
+    get:
+      summary: List auctions
+      parameters:
+        - in: query
+          name: limit
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+        - in: query
+          name: cursor
+          schema: { type: string }
+      responses:
+        "200": { description: Page of auctions }
+        "401": { description: Missing or revoked credential, content: { application/json: { schema: { $ref: "#/components/schemas/Error" } } } }
+        "429": { description: More than 60 requests in the current minute for this credential }
+    post:
+      summary: Create a draft or scheduled auction
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          schema: { type: string, minLength: 8, maxLength: 80 }
+      responses:
+        "201": { description: Created }
+        "409": { description: Idempotency key reused for a different body, or key still in progress }
+  /auctions/{auctionId}:
+    parameters:
+      - in: path
+        name: auctionId
+        required: true
+        schema: { type: string }
+    get:
+      summary: Get one auction
+      responses:
+        "200": { description: Auction }
+        "404": { description: Not on this desk }
+    patch:
+      summary: Update auction text or settings
+      description: Does not open or close the sale. Settings fields are currency, timeZone, country, format, buyersPremiumPercent, location, and description.
+      responses:
+        "200": { description: Updated. A live sale also emits auction:state on the WebSocket. }
+        "409": { description: status change is refused; opening and closing stay on the clerk console }
+  /auctions/{auctionId}/lots:
+    parameters:
+      - in: path
+        name: auctionId
+        required: true
+        schema: { type: string }
+    get:
+      summary: List lots, including reserves
+      responses:
+        "200": { description: Lots }
+    post:
+      summary: Create a draft lot
+      description: Refused when the sale is live or closed. Money fields are cents.
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          schema: { type: string }
+      responses:
+        "201": { description: Created }
+        "409": { description: Duplicate lot number or idempotency conflict }
+  /lots/{lotId}:
+    parameters:
+      - in: path
+        name: lotId
+        required: true
+        schema: { type: string }
+    get:
+      summary: Get a lot and its images
+      responses:
+        "200": { description: Lot }
+    patch:
+      summary: Update lot text or prices
+      description: Sold, passed, closed-sale, and current live-lot price changes return invariant. Starting bid is frozen after a public bid.
+      responses:
+        "200": { description: Updated and, if the sale is live, broadcast }
+        "409": { description: Invariant }
+    delete:
+      summary: Delete a draft lot with no bids
+      description: "Requires scope destructive and JSON body confirm true. Does not pass or sell the lot."
+      responses:
+        "200": { description: Deleted }
+        "409": { description: confirmation_required or invariant }
+  /lots/{lotId}/images:
+    parameters:
+      - in: path
+        name: lotId
+        required: true
+        schema: { type: string }
+    post:
+      summary: Add a JPEG, PNG, or WebP
+      description: Multipart field file, or JSON url (https only, no redirects, no private hosts), or JSON base64. Filesystem paths are not accepted.
+      responses:
+        "201": { description: Stored under data/uploads after magic-byte checks }
+        "400": { description: Validation, including blocked hosts }
+  /lots/{lotId}/images/{imageId}:
+    parameters:
+      - in: path
+        name: lotId
+        required: true
+        schema: { type: string }
+      - in: path
+        name: imageId
+        required: true
+        schema: { type: string }
+    delete:
+      summary: Delete one photograph
+      parameters:
+        - in: query
+          name: confirm
+          schema: { type: string, enum: ["true"] }
+      responses:
+        "200": { description: Deleted }
+        "409": { description: confirmation_required }
+  /credentials:
+    get:
+      summary: List this clerk's credentials
+      description: Returns prefix, scopes, and expiry. Never returns the token or its hash.
+      responses:
+        "200": { description: Credential list for the token's user }
+    post:
+      summary: Create a credential
+      description: Requires credentials:manage. The token is in the response once. That scope can mint a broader key.
+      responses:
+        "201": { description: Token shown once }
+        "400": { description: validation_error }
+  /credentials/{credentialId}/revoke:
+    parameters:
+      - in: path
+        name: credentialId
+        required: true
+        schema: { type: string }
+    post:
+      summary: Revoke a credential owned by this token's user
+      responses:
+        "200": { description: Revoked }
+        "404": { description: Not an active credential for this user }
+  /audit:
+    get:
+      summary: Recent admin audit rows
+      description: Does not include tokens or request bodies.
+      responses:
+        "200": { description: Up to 50 recent rows }
