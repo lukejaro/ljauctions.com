@@ -10,6 +10,7 @@ const { eyebrow, title, lede } = Astro.props;
 
 <header class="page-intro bg-paper">
   <div class="intro-copy wrap py-14 md:py-20">
+    <slot name="leading" />
     <p class="eyebrow text-forest">{eyebrow}</p>
     <h1 class="page-title mt-4 max-w-4xl text-ink">{title}</h1>
     <p class="page-lede measure mt-5 text-pretty text-ink-soft">{lede}</p>

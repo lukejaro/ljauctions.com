@@ -327,11 +327,26 @@ export const nav = [
   { href: "/services/", label: "Services" },
   { href: "/auctions/", label: "Auctions" },
   { href: "/contact/", label: "Contact" },
+  { href: "/gavel-live/", label: "Gavel Live", section: true },
 ] as const;
 
+function trimPath(path: string): string {
+  return path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path;
+}
+
 export function isCurrentPath(pathname: string, href: string): boolean {
-  const trim = (path: string) => (path.length > 1 && path.endsWith("/") ? path.slice(0, -1) : path);
-  return trim(pathname) === trim(href);
+  return trimPath(pathname) === trimPath(href);
+}
+
+/** Exact pages use "page". A section link on a child route uses "true". */
+export function navCurrent(
+  pathname: string,
+  item: { href: string; section?: boolean },
+): "page" | "true" | undefined {
+  if (isCurrentPath(pathname, item.href)) return "page";
+  const href = trimPath(item.href);
+  if (item.section && href !== "/" && trimPath(pathname).startsWith(`${href}/`)) return "true";
+  return undefined;
 }
 
 export function upcomingFrom(auctions: readonly Auction[], now = new Date()): Auction[] {

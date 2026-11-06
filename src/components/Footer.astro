@@ -1,6 +1,6 @@
 ---
 import ContactCard from "./ContactCard.astro";
-import { isCurrentPath, nav, site, texasAuctioneerLicenseLine } from "../data/site";
+import { nav, navCurrent, site, texasAuctioneerLicenseLine } from "../data/site";
 
 const pathname = Astro.url.pathname;
 const year = new Date().getFullYear();
@@ -30,12 +30,12 @@ const slim = pathname === "/contact" || pathname === "/contact/";
             <ul class="footer-nav">
               {
                 nav.map((item) => {
-                  const current = isCurrentPath(pathname, item.href);
+                  const current = navCurrent(pathname, item);
                   return (
                     <li>
                       <a
                         href={item.href}
-                        aria-current={current ? "page" : undefined}
+                        aria-current={current}
                         class="footer-nav-link"
                       >
                         {item.label}

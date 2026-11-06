@@ -38,6 +38,8 @@ interface Props {
   seoTitle?: string;
   /** Breadcrumb label for inner pages (Home > label). */
   breadcrumb?: string;
+  /** Crumbs after Home. The last crumb is the current page. Overrides `breadcrumb`. */
+  breadcrumbs?: readonly { name: string; href: string }[];
   /** LCP image to preload (home hero). */
   preloadImage?: string;
   /** Keep the page out of search indexes (404). */
@@ -46,7 +48,8 @@ interface Props {
   extraStructuredData?: Record<string, unknown>;
 }
 
-const { title, description, seoTitle, breadcrumb, preloadImage, noindex = false, extraStructuredData } = Astro.props;
+const { title, description, seoTitle, breadcrumb, breadcrumbs, preloadImage, noindex = false, extraStructuredData } =
+  Astro.props;
 const pageTitle = seoTitle ?? (title === site.name ? site.name : `${title} · ${site.name}`);
 const siteUrl = (Astro.site ?? new URL(site.url)).href.replace(/\/$/, "");
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -125,12 +128,24 @@ const graph: Record<string, unknown>[] = [
   },
 ];
 
-if (breadcrumb) {
+const crumbTrail =
+  breadcrumbs && breadcrumbs.length > 0
+    ? breadcrumbs
+    : breadcrumb
+      ? [{ name: breadcrumb, href: Astro.url.pathname }]
+      : null;
+
+if (crumbTrail) {
   graph.push({
     "@type": "BreadcrumbList",
     itemListElement: [
       { "@type": "ListItem", position: 1, name: "Home", item: `${siteUrl}/` },
-      { "@type": "ListItem", position: 2, name: breadcrumb, item: canonical },
+      ...crumbTrail.map((crumb, index) => ({
+        "@type": "ListItem",
+        position: index + 2,
+        name: crumb.name,
+        item: new URL(crumb.href, `${siteUrl}/`).href,
+      })),
     ],
   });
 }

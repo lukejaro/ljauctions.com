@@ -42,7 +42,12 @@ export default defineConfig({
   site: "https://ljauctions.com",
   output: "static",
   trailingSlash: "ignore",
-  integrations: [sitemap({ filter: (page) => !page.includes("/404") })],
+  integrations: [
+    sitemap({
+      // Unmerged Gavel Live preview stays out of the sitemap. It is not a live API.
+      filter: (page) => !page.includes("/404") && !page.includes("/gavel-live"),
+    }),
+  ],
   vite: {
     plugins: [tailwindcss(), vcardHeaders()],
   },
